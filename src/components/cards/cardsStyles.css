@@ -1,0 +1,113 @@
+.cards-section {
+    padding: 30px;
+    min-height: 100vh;
+    background: #f4f1de;
+}
+
+.cards-section h2 {
+    text-align: center;
+    color: #7b1e1e;
+    margin-bottom: 10px;
+}
+
+.cards-subtitle {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #444;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.card-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    background: #ddd;
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card-content h3 {
+    margin: 0 0 8px;
+    color: #7b1e1e;
+}
+
+.card-type {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #e6c15c;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-description {
+    font-size: 0.9rem;
+    color: #555;
+    min-height: 55px;
+}
+
+.card-hp {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.card-attacks {
+    margin-top: 12px;
+}
+
+.card-attacks h4 {
+    margin-bottom: 5px;
+}
+
+.card-attacks ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.card-attacks li {
+    margin-bottom: 3px;
+    font-size: 0.85rem;
+}
+
+.active-status {
+    color: #218739;
+    font-weight: bold;
+}
+
+.inactive-status {
+    color: #b42318;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .cards-section {
+        padding: 15px;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+}

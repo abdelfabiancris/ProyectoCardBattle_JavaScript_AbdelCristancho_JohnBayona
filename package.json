@@ -1,0 +1,16 @@
+{
+  "name": "proyectocardbattle-javascript-abdelcristancho-johnbayona",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "server": "json-server --watch src/data/db.json --port 3000"
+  },
+  "devDependencies": {
+    "vite": "^8.2.0"
+  },
+  "dependencies": {
+    "json-server": "^1.0.0-beta.15"
+  }
+}
