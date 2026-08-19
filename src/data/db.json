@@ -60,6 +60,51 @@
       "losses": 0,
       "gamesPlayed": 1,
       "createdAt": "2026-08-19T03:24:24.409Z"
+    },
+    {
+      "id": "Wt3W16drIDI",
+      "nickname": "ds",
+      "points": 50,
+      "wins": 1,
+      "losses": 0,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-19T03:33:39.952Z"
+    },
+    {
+      "id": "bps-Gig6hFE",
+      "nickname": "aas",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-19T03:37:02.845Z"
+    },
+    {
+      "id": "WZqGBUwyAkQ",
+      "nickname": "dsd",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-19T03:39:04.421Z"
+    },
+    {
+      "id": "JpZTgO6Ygd4",
+      "nickname": "sd",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-19T03:40:09.373Z"
+    },
+    {
+      "id": "HiuqTLkdBro",
+      "nickname": "oo",
+      "points": 50,
+      "wins": 1,
+      "losses": 0,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-19T03:45:09.660Z"
     }
   ],
   "cards": [
@@ -1139,6 +1184,52 @@
       ],
       "startedAt": "2026-08-19T03:24:31.019Z",
       "endedAt": "2026-08-19T03:25:28.882Z"
+    },
+    {
+      "id": "jYF_MGxb6y4",
+      "playerId": "Wt3W16drIDI",
+      "playerNickname": "ds",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-003",
+        "card-004",
+        "card-005"
+      ],
+      "machineDeck": [
+        "card-008",
+        "card-009",
+        "card-007",
+        "card-016",
+        "card-013"
+      ],
+      "startedAt": "2026-08-19T03:33:47.731Z",
+      "endedAt": "2026-08-19T03:34:49.612Z"
+    },
+    {
+      "id": "AkKl-eMfUuc",
+      "playerId": "HiuqTLkdBro",
+      "playerNickname": "oo",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-003",
+        "card-004",
+        "card-007"
+      ],
+      "machineDeck": [
+        "card-005",
+        "card-006",
+        "card-015",
+        "card-013",
+        "card-019"
+      ],
+      "startedAt": "2026-08-19T03:45:16.245Z",
+      "endedAt": "2026-08-19T03:47:24.580Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
