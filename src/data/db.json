@@ -8,122 +8,104 @@
   ],
   "players": [
     {
-      "id": "566XxAAtPeI",
-      "nickname": "AA",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-18T02:47:00.338Z"
-    },
-    {
-      "id": "JaEcf4uwK6I",
-      "nickname": "ss",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-18T03:12:11.703Z"
-    },
-    {
-      "id": "uH43km2TsMw",
-      "nickname": "sisi",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-18T03:34:49.975Z"
-    },
-    {
-      "id": "PpM6x2QQZcA",
-      "nickname": "pp",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-18T04:34:56.828Z"
-    },
-    {
-      "id": "CCtXuXMSdIU",
-      "nickname": "oo",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-18T04:41:30.352Z"
-    },
-    {
-      "id": "wj91p__ZdEU",
-      "nickname": "ssd",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-18T04:42:17.073Z"
-    },
-    {
-      "id": "a7uuv9p6hAc",
-      "nickname": "admin",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-18T04:45:56.963Z"
-    },
-    {
-      "id": "DQ6xUp_eQhU",
+      "id": "xZrpAkoRmXc",
       "nickname": "a",
       "points": 0,
       "wins": 0,
       "losses": 0,
       "gamesPlayed": 0,
-      "createdAt": "2026-08-18T04:51:21.659Z"
+      "createdAt": "2026-08-19T01:06:23.693Z"
+    },
+    {
+      "id": "zeZMPbilosA",
+      "nickname": "d",
+      "points": 50,
+      "wins": 1,
+      "losses": 0,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-19T01:13:42.371Z"
+    },
+    {
+      "id": "utaUOc-tfhU",
+      "nickname": "aa",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-19T01:22:03.820Z"
+    },
+    {
+      "id": "gcd7NhDZx3E",
+      "nickname": "ww",
+      "points": 50,
+      "wins": 1,
+      "losses": 0,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-19T01:23:20.236Z"
+    },
+    {
+      "id": "c8dYF0EbRu8",
+      "nickname": "ii",
+      "points": 50,
+      "wins": 1,
+      "losses": 0,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-19T02:54:01.506Z"
+    },
+    {
+      "id": "RNlmKBNCFdA",
+      "nickname": "ss",
+      "points": 50,
+      "wins": 1,
+      "losses": 0,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-19T03:24:24.409Z"
     }
   ],
   "cards": [
     {
       "id": "card-001",
       "name": "Aang",
-      "type": "Air",
+      "type": "Aire",
       "image": "/images/cards/aang.webp",
-      "description": "El Avatar y maestro aire capaz de dominar los cuatro elementos.",
+      "description": "El último maestro aire y Avatar.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Air Blast",
+          "id": "attack-01",
+          "name": "Golpe de Aire",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Air Scooter",
+          "id": "attack-02",
+          "name": "Cuchilla de Aire",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Air Sphere",
+          "id": "attack-03",
+          "name": "Tornado",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Air Strike",
+          "id": "attack-04",
+          "name": "Esfera de Aire",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Air Shield",
+        "name": "Escudo de Aire",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Avatar State",
+        "name": "Estado Avatar",
         "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-air.mp3",
-        "defense": "/sounds/defense-air.mp3",
-        "special": "/sounds/special-avatar.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -132,46 +114,46 @@
     {
       "id": "card-002",
       "name": "Katara",
-      "type": "Water",
+      "type": "Agua",
       "image": "/images/cards/katara.webp",
-      "description": "Maestra agua de la Tribu Agua del Sur especializada en curación y control.",
+      "description": "Maestra agua capaz de controlar y manipular el agua.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Water Whip",
+          "id": "attack-01",
+          "name": "Látigo de Agua",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Ice Shard",
+          "id": "attack-02",
+          "name": "Ola Cortante",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Water Wave",
+          "id": "attack-03",
+          "name": "Prisión de Agua",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Ice Barrage",
+          "id": "attack-04",
+          "name": "Torrente",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Water Shield",
+        "name": "Escudo de Agua",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Blood Bending",
+        "name": "Control Maestro",
         "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-water.mp3",
-        "defense": "/sounds/defense-water.mp3",
-        "special": "/sounds/special-water.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -180,46 +162,46 @@
     {
       "id": "card-003",
       "name": "Sokka",
-      "type": "Warrior",
+      "type": "Guerrero",
       "image": "/images/cards/sokka.webp",
-      "description": "Guerrero de la Tribu Agua del Sur experto en estrategia y combate.",
+      "description": "Guerrero estratega del equipo Avatar.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Boomerang",
+          "id": "attack-01",
+          "name": "Bumerán",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Club Strike",
+          "id": "attack-02",
+          "name": "Golpe de Espada",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Sword Slash",
+          "id": "attack-03",
+          "name": "Ataque Estratégico",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Boomerang Combo",
+          "id": "attack-04",
+          "name": "Golpe Maestro",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Warrior Guard",
+        "name": "Guardia Guerrera",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Space Sword",
-        "baseDamage": 60,
+        "name": "Plan Perfecto",
+        "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-warrior.mp3",
-        "defense": "/sounds/defense-warrior.mp3",
-        "special": "/sounds/special-warrior.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -228,46 +210,46 @@
     {
       "id": "card-004",
       "name": "Toph",
-      "type": "Earth",
+      "type": "Tierra",
       "image": "/images/cards/toph.webp",
       "description": "Maestra tierra y creadora del metal control.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Earth Punch",
+          "id": "attack-01",
+          "name": "Roca",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Rock Throw",
+          "id": "attack-02",
+          "name": "Golpe Sísmico",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Earth Wall",
+          "id": "attack-03",
+          "name": "Muro de Tierra",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Earthquake",
+          "id": "attack-04",
+          "name": "Avalancha",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Earth Armor",
+        "name": "Muro de Tierra",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Metal Bending",
+        "name": "Terremoto",
         "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-earth.mp3",
-        "defense": "/sounds/defense-earth.mp3",
-        "special": "/sounds/special-earth.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -276,46 +258,46 @@
     {
       "id": "card-005",
       "name": "Zuko",
-      "type": "Fire",
+      "type": "Fuego",
       "image": "/images/cards/zuko.webp",
-      "description": "Maestro fuego de la Nación del Fuego y experto espadachín.",
+      "description": "Príncipe de la Nación del Fuego y maestro fuego.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Fire Punch",
+          "id": "attack-01",
+          "name": "Llamarada",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Fire Kick",
+          "id": "attack-02",
+          "name": "Patada Ígnea",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Flame Burst",
+          "id": "attack-03",
+          "name": "Danza de Fuego",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Fire Dragon",
+          "id": "attack-04",
+          "name": "Dragón de Fuego",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Fire Guard",
+        "name": "Muro de Fuego",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Dragon Flame",
+        "name": "Fuego Controlado",
         "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-fire.mp3",
-        "defense": "/sounds/defense-fire.mp3",
-        "special": "/sounds/special-fire.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -323,47 +305,47 @@
     },
     {
       "id": "card-006",
-      "name": "Azula",
-      "type": "Fire",
-      "image": "/images/cards/azula.webp",
-      "description": "Princesa de la Nación del Fuego y maestra fuego prodigiosa.",
+      "name": "Iroh",
+      "type": "Fuego",
+      "image": "/images/cards/iroh.webp",
+      "description": "Sabio maestro fuego conocido como el Dragón del Oeste.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Blue Flame",
+          "id": "attack-01",
+          "name": "Llama Serena",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Fire Kick",
+          "id": "attack-02",
+          "name": "Puño de Fuego",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Flame Wheel",
+          "id": "attack-03",
+          "name": "Aliento de Dragón",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Lightning Strike",
+          "id": "attack-04",
+          "name": "Rugido del Dragón",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Flame Barrier",
+        "name": "Respiración Serena",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Lightning Bending",
-        "baseDamage": 70,
+        "name": "Aliento del Dragón",
+        "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-fire.mp3",
-        "defense": "/sounds/defense-fire.mp3",
-        "special": "/sounds/special-lightning.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -371,47 +353,47 @@
     },
     {
       "id": "card-007",
-      "name": "Iroh",
-      "type": "Fire",
-      "image": "/images/cards/iroh.webp",
-      "description": "El Dragón del Oeste, maestro fuego y antiguo general.",
+      "name": "Azula",
+      "type": "Fuego",
+      "image": "/images/cards/azula.webp",
+      "description": "Princesa de la Nación del Fuego y maestra del fuego azul.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Fire Breath",
+          "id": "attack-01",
+          "name": "Fuego Azul",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Flame Wave",
+          "id": "attack-02",
+          "name": "Patada Real",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Fire Wall",
+          "id": "attack-03",
+          "name": "Rayo Ígneo",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Dragon Flame",
+          "id": "attack-04",
+          "name": "Tormenta Azul",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Dragon Guard",
+        "name": "Muro Azul",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Lightning Redirection",
+        "name": "Rayo Controlado",
         "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-fire.mp3",
-        "defense": "/sounds/defense-fire.mp3",
-        "special": "/sounds/special-iroh.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -419,47 +401,47 @@
     },
     {
       "id": "card-008",
-      "name": "Bumi",
-      "type": "Earth",
-      "image": "/images/cards/bumi.webp",
-      "description": "Rey de Omashu y poderoso maestro tierra.",
+      "name": "Mai",
+      "type": "Guerrera",
+      "image": "/images/cards/mai.webp",
+      "description": "Experta en lanzamiento de cuchillos y armas arrojadizas.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Rock Punch",
+          "id": "attack-01",
+          "name": "Daga",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Earth Toss",
+          "id": "attack-02",
+          "name": "Lanzamiento",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Stone Wall",
+          "id": "attack-03",
+          "name": "Lluvia de Dagas",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Omashu Quake",
+          "id": "attack-04",
+          "name": "Ataque Preciso",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Earth Fortress",
+        "name": "Evasión",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Seismic Power",
+        "name": "Lluvia Mortal",
         "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-earth.mp3",
-        "defense": "/sounds/defense-earth.mp3",
-        "special": "/sounds/special-earth.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -467,47 +449,47 @@
     },
     {
       "id": "card-009",
-      "name": "Suki",
-      "type": "Warrior",
-      "image": "/images/cards/suki.webp",
-      "description": "Líder de las Guerreras Kyoshi y experta en combate.",
+      "name": "Ty Lee",
+      "type": "Chi",
+      "image": "/images/cards/ty-lee.webp",
+      "description": "Experta en artes acrobáticas y bloqueo de chi.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Fan Strike",
+          "id": "attack-01",
+          "name": "Golpe de Chi",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Kick Combo",
+          "id": "attack-02",
+          "name": "Patada Acrobática",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Kyoshi Fan",
+          "id": "attack-03",
+          "name": "Bloqueo de Chi",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Warrior Combo",
+          "id": "attack-04",
+          "name": "Combo Acrobático",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Kyoshi Guard",
+        "name": "Acrobacia",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Kyoshi Technique",
-        "baseDamage": 60,
+        "name": "Bloqueo Total",
+        "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-warrior.mp3",
-        "defense": "/sounds/defense-warrior.mp3",
-        "special": "/sounds/special-warrior.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -515,47 +497,47 @@
     },
     {
       "id": "card-010",
-      "name": "Ty Lee",
-      "type": "Chi Blocker",
-      "image": "/images/cards/ty-lee.webp",
-      "description": "Experta acróbata capaz de bloquear el flujo de chi de sus enemigos.",
+      "name": "Bumi",
+      "type": "Tierra",
+      "image": "/images/cards/bumi.webp",
+      "description": "Rey de Omashu y poderoso maestro tierra.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Acrobatic Strike",
+          "id": "attack-01",
+          "name": "Roca Gigante",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Chi Block",
+          "id": "attack-02",
+          "name": "Golpe de Tierra",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Flying Kick",
+          "id": "attack-03",
+          "name": "Prisión Rocosa",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Pressure Point",
+          "id": "attack-04",
+          "name": "Avalancha Real",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Acrobatic Dodge",
+        "name": "Fortaleza de Tierra",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Full Chi Block",
-        "baseDamage": 60,
+        "name": "Locura de Bumi",
+        "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-warrior.mp3",
-        "defense": "/sounds/defense-warrior.mp3",
-        "special": "/sounds/special-chi.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -563,47 +545,47 @@
     },
     {
       "id": "card-011",
-      "name": "Mai",
-      "type": "Warrior",
-      "image": "/images/cards/mai.webp",
-      "description": "Guerrera experta en el uso de cuchillos y proyectiles.",
+      "name": "Suki",
+      "type": "Guerrera Kyoshi",
+      "image": "/images/cards/suki.webp",
+      "description": "Guerrera Kyoshi experta en combate cuerpo a cuerpo.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Knife Throw",
+          "id": "attack-01",
+          "name": "Abanico",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Double Knife",
+          "id": "attack-02",
+          "name": "Patada Kyoshi",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Blade Rain",
+          "id": "attack-03",
+          "name": "Combo Kyoshi",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Precision Strike",
+          "id": "attack-04",
+          "name": "Danza Guerrera",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Knife Guard",
+        "name": "Defensa Kyoshi",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Perfect Precision",
-        "baseDamage": 60,
+        "name": "Técnica Kyoshi",
+        "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-warrior.mp3",
-        "defense": "/sounds/defense-warrior.mp3",
-        "special": "/sounds/special-warrior.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -611,47 +593,47 @@
     },
     {
       "id": "card-012",
-      "name": "Ozai",
-      "type": "Fire",
-      "image": "/images/cards/ozai.webp",
-      "description": "Señor del Fuego y uno de los maestros fuego más poderosos.",
+      "name": "Zhao",
+      "type": "Fuego",
+      "image": "/images/cards/zhao.webp",
+      "description": "Almirante de la Nación del Fuego.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Fire Blast",
+          "id": "attack-01",
+          "name": "Llama Naval",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Flame Wave",
+          "id": "attack-02",
+          "name": "Golpe Ígneo",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Fire Storm",
+          "id": "attack-03",
+          "name": "Fuego Naval",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Lightning",
+          "id": "attack-04",
+          "name": "Tormenta de Fuego",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Fire Wall",
+        "name": "Escudo Ígneo",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Sozin Comet",
-        "baseDamage": 70,
+        "name": "Furia del Almirante",
+        "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-fire.mp3",
-        "defense": "/sounds/defense-fire.mp3",
-        "special": "/sounds/special-lightning.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -659,47 +641,47 @@
     },
     {
       "id": "card-013",
-      "name": "Admiral Zhao",
-      "type": "Fire",
-      "image": "/images/cards/zhao.webp",
-      "description": "Almirante de la Nación del Fuego y maestro fuego.",
+      "name": "Jeong Jeong",
+      "type": "Fuego",
+      "image": "/images/cards/jeong-jeong.webp",
+      "description": "Maestro fuego disciplinado y antiguo general.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Fire Slash",
+          "id": "attack-01",
+          "name": "Llama Controlada",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Flame Shot",
+          "id": "attack-02",
+          "name": "Muro Ígneo",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Fire Wave",
+          "id": "attack-03",
+          "name": "Columna de Fuego",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Inferno",
+          "id": "attack-04",
+          "name": "Tormenta Ígnea",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Fire Guard",
+        "name": "Muro de Fuego",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Infernal Strike",
-        "baseDamage": 60,
+        "name": "Infierno Controlado",
+        "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-fire.mp3",
-        "defense": "/sounds/defense-fire.mp3",
-        "special": "/sounds/special-fire.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -707,47 +689,47 @@
     },
     {
       "id": "card-014",
-      "name": "Yue",
-      "type": "Water",
-      "image": "/images/cards/yue.webp",
-      "description": "Princesa de la Tribu Agua del Norte vinculada espiritualmente con la Luna.",
+      "name": "Pakku",
+      "type": "Agua",
+      "image": "/images/cards/pakku.webp",
+      "description": "Gran maestro agua de la Tribu Agua del Norte.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Moon Wave",
+          "id": "attack-01",
+          "name": "Lanza de Hielo",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Water Ring",
+          "id": "attack-02",
+          "name": "Ola Helada",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Ice Crescent",
+          "id": "attack-03",
+          "name": "Tormenta de Hielo",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Lunar Tide",
+          "id": "attack-04",
+          "name": "Glaciar",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Moon Shield",
+        "name": "Muro de Hielo",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Moon Blessing",
+        "name": "Prisión de Hielo",
         "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-water.mp3",
-        "defense": "/sounds/defense-water.mp3",
-        "special": "/sounds/special-moon.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -755,47 +737,47 @@
     },
     {
       "id": "card-015",
-      "name": "Hakoda",
-      "type": "Warrior",
-      "image": "/images/cards/hakoda.webp",
-      "description": "Jefe de la Tribu Agua del Sur y experimentado guerrero.",
+      "name": "Piandao",
+      "type": "Espadachín",
+      "image": "/images/cards/piandao.webp",
+      "description": "Maestro espadachín y mentor de Sokka.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Spear Strike",
+          "id": "attack-01",
+          "name": "Corte Rápido",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Warrior Slash",
+          "id": "attack-02",
+          "name": "Estocada",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Spear Throw",
+          "id": "attack-03",
+          "name": "Corte Doble",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Southern Assault",
+          "id": "attack-04",
+          "name": "Golpe del Maestro",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Warrior Shield",
+        "name": "Guardia del Maestro",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Southern Commander",
-        "baseDamage": 60,
+        "name": "Espada Maestra",
+        "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-warrior.mp3",
-        "defense": "/sounds/defense-warrior.mp3",
-        "special": "/sounds/special-warrior.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -803,47 +785,47 @@
     },
     {
       "id": "card-016",
-      "name": "Roku",
-      "type": "Avatar",
-      "image": "/images/cards/roku.webp",
-      "description": "Avatar anterior a Aang y poderoso maestro de los cuatro elementos.",
+      "name": "Combustion Man",
+      "type": "Combustión",
+      "image": "/images/cards/combustion-man.webp",
+      "description": "Poderoso maestro de combustión con ataques a distancia.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Fire Wave",
+          "id": "attack-01",
+          "name": "Explosión",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Earth Strike",
+          "id": "attack-02",
+          "name": "Rayo Explosivo",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Water Surge",
+          "id": "attack-03",
+          "name": "Impacto Combustivo",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Air Blast",
+          "id": "attack-04",
+          "name": "Gran Explosión",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Elemental Shield",
+        "name": "Barrera Combustiva",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Roku's Fury",
-        "baseDamage": 70,
+        "name": "Combustión Total",
+        "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-avatar.mp3",
-        "defense": "/sounds/defense-avatar.mp3",
-        "special": "/sounds/special-avatar.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -851,47 +833,47 @@
     },
     {
       "id": "card-017",
-      "name": "Kyoshi",
-      "type": "Avatar",
-      "image": "/images/cards/kyoshi.webp",
-      "description": "Una de las Avatares más poderosas y fundadora de la Isla Kyoshi.",
+      "name": "Hama",
+      "type": "Agua",
+      "image": "/images/cards/hama.webp",
+      "description": "Maestra agua con gran experiencia en técnicas avanzadas.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Earth Fist",
+          "id": "attack-01",
+          "name": "Látigo",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Fire Wave",
+          "id": "attack-02",
+          "name": "Ola",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Air Push",
+          "id": "attack-03",
+          "name": "Control de Agua",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Water Strike",
+          "id": "attack-04",
+          "name": "Marea",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Avatar Guard",
+        "name": "Escudo Líquido",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Kyoshi Avatar State",
-        "baseDamage": 70,
+        "name": "Control Maestro",
+        "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-avatar.mp3",
-        "defense": "/sounds/defense-avatar.mp3",
-        "special": "/sounds/special-avatar.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -899,47 +881,47 @@
     },
     {
       "id": "card-018",
-      "name": "Jet",
-      "type": "Warrior",
-      "image": "/images/cards/jet.webp",
-      "description": "Líder de los Guerreros Libertad y hábil combatiente.",
+      "name": "Long Feng",
+      "type": "Tierra",
+      "image": "/images/cards/long-feng.webp",
+      "description": "Líder de los Dai Li y estratega de Ba Sing Se.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Hook Sword",
+          "id": "attack-01",
+          "name": "Roca",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Dual Blades",
+          "id": "attack-02",
+          "name": "Guante Tierra",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Blade Rush",
+          "id": "attack-03",
+          "name": "Dai Li",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Freedom Assault",
+          "id": "attack-04",
+          "name": "Golpe de Tierra",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Blade Guard",
+        "name": "Defensa Dai Li",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Dual Hook Strike",
-        "baseDamage": 60,
+        "name": "Control de Dai Li",
+        "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-warrior.mp3",
-        "defense": "/sounds/defense-warrior.mp3",
-        "special": "/sounds/special-warrior.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -947,47 +929,47 @@
     },
     {
       "id": "card-019",
-      "name": "Appa",
-      "type": "Sky Bison",
-      "image": "/images/cards/appa.webp",
-      "description": "El fiel bisonte volador de Aang y compañero del Equipo Avatar.",
+      "name": "Ozai",
+      "type": "Fuego",
+      "image": "/images/cards/ozai.webp",
+      "description": "Señor del Fuego y poderoso maestro fuego.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Headbutt",
+          "id": "attack-01",
+          "name": "Llama Real",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Tail Swipe",
+          "id": "attack-02",
+          "name": "Golpe del Señor",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Charge",
+          "id": "attack-03",
+          "name": "Rayo",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Bison Roar",
+          "id": "attack-04",
+          "name": "Tormenta Real",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Fur Guard",
+        "name": "Escudo Real",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Sky Bison Charge",
-        "baseDamage": 60,
+        "name": "Fuego del Cometa",
+        "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-bison.mp3",
-        "defense": "/sounds/defense-bison.mp3",
-        "special": "/sounds/special-bison.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
@@ -995,53 +977,169 @@
     },
     {
       "id": "card-020",
-      "name": "Momo",
-      "type": "Winged Lemur",
-      "image": "/images/cards/momo.webp",
-      "description": "El pequeño y ágil lémur volador compañero del Equipo Avatar.",
+      "name": "Avatar Roku",
+      "type": "Avatar",
+      "image": "/images/cards/roku.webp",
+      "description": "Avatar anterior a Aang y maestro de los cuatro elementos.",
       "hp": 250,
       "attacks": [
         {
-          "id": "attack-001",
-          "name": "Scratch",
+          "id": "attack-01",
+          "name": "Fuego Avatar",
           "baseDamage": 20
         },
         {
-          "id": "attack-002",
-          "name": "Quick Bite",
+          "id": "attack-02",
+          "name": "Golpe Elemental",
           "baseDamage": 30
         },
         {
-          "id": "attack-003",
-          "name": "Flying Attack",
+          "id": "attack-03",
+          "name": "Furia Elemental",
           "baseDamage": 40
         },
         {
-          "id": "attack-004",
-          "name": "Momo Rush",
+          "id": "attack-04",
+          "name": "Tormenta Elemental",
           "baseDamage": 50
         }
       ],
       "defense": {
-        "name": "Agility",
+        "name": "Defensa de los Cuatro Elementos",
         "damageReduction": 0.5
       },
       "special": {
-        "name": "Momo Fury",
-        "baseDamage": 55,
+        "name": "Estado Avatar",
+        "baseDamage": 65,
         "unlockTurn": 2,
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-air.mp3",
-        "defense": "/sounds/defense-air.mp3",
-        "special": "/sounds/special-air.mp3",
+        "attack": "/sounds/attack.mp3",
+        "defense": "/sounds/defense.mp3",
+        "special": "/sounds/special.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
     }
   ],
-  "battles": [],
+  "battles": [
+    {
+      "id": "jglGO4nAmYw",
+      "playerId": "zeZMPbilosA",
+      "playerNickname": "d",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-003",
+        "card-004",
+        "card-005"
+      ],
+      "machineDeck": [
+        "card-019",
+        "card-006",
+        "card-013",
+        "card-015",
+        "card-007"
+      ],
+      "startedAt": "2026-08-19T01:13:49.506Z",
+      "endedAt": "2026-08-19T01:15:28.021Z"
+    },
+    {
+      "id": "C1xvqdrbWh4",
+      "playerId": "gcd7NhDZx3E",
+      "playerNickname": "ww",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-004",
+        "card-003",
+        "card-005"
+      ],
+      "machineDeck": [
+        "card-007",
+        "card-020",
+        "card-012",
+        "card-015",
+        "card-006"
+      ],
+      "startedAt": "2026-08-19T01:23:29.610Z",
+      "endedAt": "2026-08-19T01:24:16.999Z"
+    },
+    {
+      "id": "IJkx30aDhmk",
+      "playerId": "gcd7NhDZx3E",
+      "playerNickname": "ww",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-004",
+        "card-003",
+        "card-005"
+      ],
+      "machineDeck": [
+        "card-007",
+        "card-020",
+        "card-012",
+        "card-015",
+        "card-006"
+      ],
+      "startedAt": "2026-08-19T01:23:29.610Z",
+      "endedAt": "2026-08-19T01:24:19.919Z"
+    },
+    {
+      "id": "6O3M4Q3c2vs",
+      "playerId": "c8dYF0EbRu8",
+      "playerNickname": "ii",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-003",
+        "card-004",
+        "card-005"
+      ],
+      "machineDeck": [
+        "card-015",
+        "card-019",
+        "card-012",
+        "card-016",
+        "card-014"
+      ],
+      "startedAt": "2026-08-19T02:54:08.187Z",
+      "endedAt": "2026-08-19T02:55:02.424Z"
+    },
+    {
+      "id": "V7wXwpm6_Q4",
+      "playerId": "RNlmKBNCFdA",
+      "playerNickname": "ss",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-003",
+        "card-004",
+        "card-005"
+      ],
+      "machineDeck": [
+        "card-013",
+        "card-008",
+        "card-016",
+        "card-007",
+        "card-006"
+      ],
+      "startedAt": "2026-08-19T03:24:31.019Z",
+      "endedAt": "2026-08-19T03:25:28.882Z"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

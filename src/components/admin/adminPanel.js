@@ -1,35 +1,44 @@
 import {
-    getCards
+    getCards,
+    createCard,
+    updateCard,
+    patchCard,
+    deleteCard
 } from '../../api/cardsApi.js';
-
-import {
-    crearCarta
-} from '../cards/createCards.js';
-
-import {
-    editarCartaCompleta,
-    editarCartaParcial
-} from '../cards/editCards.js';
-
-import {
-    eliminarCarta
-} from '../cards/deleteCards.js';
 
 import './adminStyles.css';
 
 export class AdminPanel extends HTMLElement {
 
     constructor() {
-
         super();
 
         this.cards = [];
 
-        this.editingCard = null;
-
         this.renderLoading();
 
         this.loadCards();
+    }
+
+    renderLoading() {
+
+        this.innerHTML = `
+            <section class="admin-section">
+
+                <div class="admin-container">
+
+                    <h1>
+                        👑 Panel de administración
+                    </h1>
+
+                    <p>
+                        Cargando cartas...
+                    </p>
+
+                </div>
+
+            </section>
+        `;
     }
 
     async loadCards() {
@@ -41,31 +50,14 @@ export class AdminPanel extends HTMLElement {
 
             this.render();
 
-            this.configureEvents();
-
         } catch (error) {
 
             console.error(error);
 
-            this.renderError();
+            this.showError(
+                'No se pudieron cargar las cartas.'
+            );
         }
-    }
-
-    renderLoading() {
-
-        this.innerHTML = `
-            <section class="admin-section">
-
-                <h1>
-                    ⚙️ Panel administrativo
-                </h1>
-
-                <p>
-                    Cargando cartas...
-                </p>
-
-            </section>
-        `;
     }
 
     render() {
@@ -80,57 +72,100 @@ export class AdminPanel extends HTMLElement {
                         <div>
 
                             <h1>
-                                ⚙️ Administración
+                                👑 Administración
                             </h1>
 
                             <p>
                                 Gestión de cartas
+                                de Card Battle Arena.
                             </p>
 
                         </div>
 
                         <button
-                            id="logout-admin"
-                            class="admin-button"
+                            id="logout-button"
+                            class="admin-button secondary"
                         >
-                            🚪 Salir
+                            🚪 Cerrar sesión
                         </button>
 
                     </header>
 
-                    <section class="admin-form-section">
+                    <section
+                        class="admin-create-section"
+                    >
 
                         <h2>
-                            ${
-                                this.editingCard
-                                    ? '✏️ Editar carta'
-                                    : '➕ Crear carta'
-                            }
+                            ➕ Crear nueva carta
                         </h2>
 
-                        ${this.renderForm()}
+                        <form
+                            id="create-card-form"
+                            class="card-form"
+                        >
+
+                            <input
+                                type="text"
+                                id="card-name"
+                                placeholder="Nombre de la carta"
+                                required
+                            >
+
+                            <input
+                                type="text"
+                                id="card-type"
+                                placeholder="Elemento / Tipo"
+                                required
+                            >
+
+                            <input
+                                type="text"
+                                id="card-image"
+                                placeholder="/images/cards/carta.webp"
+                                required
+                            >
+
+                            <textarea
+                                id="card-description"
+                                placeholder="Descripción"
+                                required
+                            ></textarea>
+
+                            <button
+                                type="submit"
+                                class="admin-button"
+                            >
+                                ➕ Crear carta
+                            </button>
+
+                        </form>
 
                     </section>
 
                     <section class="admin-cards-section">
 
                         <h2>
-                            🃏 Cartas
-                            (${this.cards.length})
+                            🃏 Cartas registradas
                         </h2>
 
-                        <div class="admin-cards-grid">
+                        <div
+                            id="admin-message"
+                            class="admin-message"
+                        ></div>
 
-                            ${
-                                this.cards
-                                    .map(
-                                        (card) =>
-                                            this.renderCard(
-                                                card
-                                            )
-                                    )
-                                    .join('')
-                            }
+                        <div
+                            id="admin-cards-grid"
+                            class="admin-cards-grid"
+                        >
+
+                            ${this.cards
+                .map(
+                    (card) =>
+                        this.createCardHTML(
+                            card
+                        )
+                )
+                .join('')}
 
                         </div>
 
@@ -140,284 +175,27 @@ export class AdminPanel extends HTMLElement {
 
             </section>
         `;
+
+        this.configureEvents();
     }
 
-    renderForm() {
-
-        const card =
-            this.editingCard;
-
-        return `
-            <form
-                id="card-form"
-                class="admin-form"
-            >
-
-                <div class="form-group">
-
-                    <label>
-                        Nombre
-                    </label>
-
-                    <input
-                        type="text"
-                        id="card-name"
-                        required
-                        value="${
-                            card?.name || ''
-                        }"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Tipo
-                    </label>
-
-                    <input
-                        type="text"
-                        id="card-type"
-                        required
-                        value="${
-                            card?.type || ''
-                        }"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Imagen
-                    </label>
-
-                    <input
-                        type="text"
-                        id="card-image"
-                        value="${
-                            card?.image || ''
-                        }"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Descripción
-                    </label>
-
-                    <textarea
-                        id="card-description"
-                        required
-                    >${
-                        card?.description || ''
-                    }</textarea>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Ataque 1
-                    </label>
-
-                    <input
-                        type="text"
-                        id="attack-1-name"
-                        required
-                        value="${
-                            card?.attacks?.[0]?.name || ''
-                        }"
-                    >
-
-                    <input
-                        type="number"
-                        id="attack-1-damage"
-                        required
-                        min="1"
-                        value="${
-                            card?.attacks?.[0]?.baseDamage || 20
-                        }"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Ataque 2
-                    </label>
-
-                    <input
-                        type="text"
-                        id="attack-2-name"
-                        required
-                        value="${
-                            card?.attacks?.[1]?.name || ''
-                        }"
-                    >
-
-                    <input
-                        type="number"
-                        id="attack-2-damage"
-                        required
-                        min="1"
-                        value="${
-                            card?.attacks?.[1]?.baseDamage || 30
-                        }"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Ataque 3
-                    </label>
-
-                    <input
-                        type="text"
-                        id="attack-3-name"
-                        required
-                        value="${
-                            card?.attacks?.[2]?.name || ''
-                        }"
-                    >
-
-                    <input
-                        type="number"
-                        id="attack-3-damage"
-                        required
-                        min="1"
-                        value="${
-                            card?.attacks?.[2]?.baseDamage || 40
-                        }"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Ataque 4
-                    </label>
-
-                    <input
-                        type="text"
-                        id="attack-4-name"
-                        required
-                        value="${
-                            card?.attacks?.[3]?.name || ''
-                        }"
-                    >
-
-                    <input
-                        type="number"
-                        id="attack-4-damage"
-                        required
-                        min="1"
-                        value="${
-                            card?.attacks?.[3]?.baseDamage || 50
-                        }"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Defensa
-                    </label>
-
-                    <input
-                        type="text"
-                        id="defense-name"
-                        required
-                        value="${
-                            card?.defense?.name || ''
-                        }"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Poder especial
-                    </label>
-
-                    <input
-                        type="text"
-                        id="special-name"
-                        required
-                        value="${
-                            card?.special?.name || ''
-                        }"
-                    >
-
-                    <input
-                        type="number"
-                        id="special-damage"
-                        required
-                        min="1"
-                        value="${
-                            card?.special?.baseDamage || 65
-                        }"
-                    >
-
-                </div>
-
-                <div class="form-actions">
-
-                    <button
-                        type="submit"
-                        class="admin-button primary"
-                    >
-                        ${
-                            card
-                                ? '💾 Guardar cambios'
-                                : '➕ Crear carta'
-                        }
-                    </button>
-
-                    ${
-                        card
-                            ? `
-                                <button
-                                    type="button"
-                                    id="cancel-edit"
-                                    class="admin-button"
-                                >
-                                    Cancelar
-                                </button>
-                            `
-                            : ''
-                    }
-
-                </div>
-
-            </form>
-        `;
-    }
-
-    renderCard(card) {
+    createCardHTML(card) {
 
         return `
             <article
-                class="admin-card"
+                class="
+                    admin-card
+                    ${card.active
+                ? ''
+                : 'inactive'}
+                "
+                data-id="${card.id}"
             >
 
-                <div class="admin-card-image">
-
-                    <img
-                        src="${card.image}"
-                        alt="${card.name}"
-                    >
-
-                </div>
+                <img
+                    src="${card.image}"
+                    alt="${card.name}"
+                >
 
                 <div class="admin-card-content">
 
@@ -427,53 +205,44 @@ export class AdminPanel extends HTMLElement {
 
                     <p>
                         Tipo:
-                        <strong>
-                            ${card.type}
-                        </strong>
+                        ${card.type}
                     </p>
 
                     <p>
                         HP:
-                        <strong>
-                            ${card.hp}
-                        </strong>
+                        ${card.hp}
                     </p>
 
                     <p>
                         Estado:
-                        ${
-                            card.active
-                                ? '🟢 Activa'
-                                : '🔴 Inactiva'
-                        }
+                        ${card.active
+                ? '🟢 Activa'
+                : '🔴 Inactiva'
+            }
                     </p>
 
                     <div class="admin-card-actions">
 
                         <button
-                            class="admin-button"
-                            data-edit="${card.id}"
+                            class="edit-button"
+                            data-id="${card.id}"
                         >
                             ✏️ Editar
                         </button>
 
                         <button
-                            class="admin-button"
-                            data-toggle="${card.id}"
+                            class="toggle-button"
+                            data-id="${card.id}"
                         >
-                            ${
-                                card.active
-                                    ? '🔴 Desactivar'
-                                    : '🟢 Activar'
-                            }
+                            ${card.active
+                ? '🔴 Desactivar'
+                : '🟢 Activar'
+            }
                         </button>
 
                         <button
-                            class="
-                                admin-button
-                                danger
-                            "
-                            data-delete="${card.id}"
+                            class="delete-button"
+                            data-id="${card.id}"
                         >
                             🗑️ Eliminar
                         </button>
@@ -488,206 +257,175 @@ export class AdminPanel extends HTMLElement {
 
     configureEvents() {
 
-        const form =
+        /*
+         * Crear carta.
+         */
+        const createForm =
             this.querySelector(
-                '#card-form'
+                '#create-card-form'
             );
 
-        if (form) {
+        createForm.addEventListener(
+            'submit',
+            (event) => {
 
-            form.addEventListener(
-                'submit',
-                (event) => {
+                event.preventDefault();
 
-                    event.preventDefault();
+                this.handleCreateCard();
+            }
+        );
 
-                    this.saveCard();
-                }
-            );
-        }
+        /*
+         * Editar carta.
+         */
+        this.querySelectorAll(
+            '.edit-button'
+        ).forEach(
+            (button) => {
 
-        const cancel =
-            this.querySelector(
-                '#cancel-edit'
-            );
+                button.addEventListener(
+                    'click',
+                    () => {
 
-        if (cancel) {
-
-            cancel.addEventListener(
-                'click',
-                () => {
-
-                    this.editingCard =
-                        null;
-
-                    this.render();
-
-                    this.configureEvents();
-                }
-            );
-        }
-
-        this
-            .querySelectorAll(
-                '[data-edit]'
-            )
-            .forEach(
-                (button) => {
-
-                    button.addEventListener(
-                        'click',
-                        () => {
-
-                            const id =
-                                button.dataset.edit;
-
-                            this.startEdit(id);
-                        }
-                    );
-                }
-            );
-
-        this
-            .querySelectorAll(
-                '[data-toggle]'
-            )
-            .forEach(
-                (button) => {
-
-                    button.addEventListener(
-                        'click',
-                        () => {
-
-                            const id =
-                                button.dataset.toggle;
-
-                            this.toggleCard(id);
-                        }
-                    );
-                }
-            );
-
-        this
-            .querySelectorAll(
-                '[data-delete]'
-            )
-            .forEach(
-                (button) => {
-
-                    button.addEventListener(
-                        'click',
-                        () => {
-
-                            const id =
-                                button.dataset.delete;
-
-                            this.deleteCard(id);
-                        }
-                    );
-                }
-            );
-
-        const logout =
-            this.querySelector(
-                '#logout-admin'
-            );
-
-        if (logout) {
-
-            logout.addEventListener(
-                'click',
-                () => {
-
-                    this.dispatchEvent(
-                        new CustomEvent(
-                            'admin-logout',
-                            {
-                                bubbles: true
-                            }
-                        )
-                    );
-                }
-            );
-        }
-    }
-
-    async saveCard() {
-
-        try {
-
-            const card =
-                this.getFormData();
-
-            if (this.editingCard) {
-
-                /*
-                 * PUT:
-                 * reemplazamos la carta completa.
-                 */
-                await editarCartaCompleta(
-                    card,
-                    this.editingCard.id
-                );
-
-                alert(
-                    'Carta actualizada correctamente.'
-                );
-
-            } else {
-
-                /*
-                 * POST:
-                 * creamos una carta nueva.
-                 */
-                await crearCarta(card);
-
-                alert(
-                    'Carta creada correctamente.'
+                        this.handleEditCard(
+                            button.dataset.id
+                        );
+                    }
                 );
             }
+        );
 
-            this.editingCard =
-                null;
+        /*
+         * Activar / desactivar.
+         *
+         * Esto utiliza PATCH.
+         */
+        this.querySelectorAll(
+            '.toggle-button'
+        ).forEach(
+            (button) => {
 
-            await this.loadCards();
+                button.addEventListener(
+                    'click',
+                    () => {
 
-        } catch (error) {
+                        this.handleToggleCard(
+                            button.dataset.id
+                        );
+                    }
+                );
+            }
+        );
 
-            alert(
-                error.message
-            );
-        }
+        /*
+         * Eliminar carta.
+         */
+        this.querySelectorAll(
+            '.delete-button'
+        ).forEach(
+            (button) => {
+
+                button.addEventListener(
+                    'click',
+                    () => {
+
+                        this.handleDeleteCard(
+                            button.dataset.id
+                        );
+                    }
+                );
+            }
+        );
+
+        /*
+         * Cerrar sesión.
+         */
+        this.querySelector(
+            '#logout-button'
+        ).addEventListener(
+            'click',
+            () => {
+
+                this.dispatchEvent(
+                    new CustomEvent(
+                        'admin-logout',
+                        {
+                            bubbles: true
+                        }
+                    )
+                );
+            }
+        );
     }
 
-    getFormData() {
+    async handleCreateCard() {
 
-        const id =
-            this.editingCard?.id
-            || `card-${Date.now()}`;
+        const name =
+            this.querySelector(
+                '#card-name'
+            ).value.trim();
 
-        return {
+        const type =
+            this.querySelector(
+                '#card-type'
+            ).value.trim();
 
-            id,
+        const image =
+            this.querySelector(
+                '#card-image'
+            ).value.trim();
 
-            name:
-                this.querySelector(
-                    '#card-name'
-                ).value.trim(),
+        const description =
+            this.querySelector(
+                '#card-description'
+            ).value.trim();
 
-            type:
-                this.querySelector(
-                    '#card-type'
-                ).value.trim(),
+        if (
+            !name ||
+            !type ||
+            !image ||
+            !description
+        ) {
 
-            image:
-                this.querySelector(
-                    '#card-image'
-                ).value.trim(),
+            this.showMessage(
+                'Todos los campos son obligatorios.'
+            );
 
-            description:
-                this.querySelector(
-                    '#card-description'
-                ).value.trim(),
+            return;
+        }
+
+        /*
+         * Verificamos que no exista
+         * otra carta con el mismo nombre.
+         */
+        const exists =
+            this.cards.some(
+                (card) =>
+                    card.name.toLowerCase() ===
+                    name.toLowerCase()
+            );
+
+        if (exists) {
+
+            this.showMessage(
+                'Ya existe una carta con ese nombre.'
+            );
+
+            return;
+        }
+
+        const newCard = {
+
+            id:
+                `card-${Date.now()}`,
+
+            name,
+
+            type,
+
+            image,
+
+            description,
 
             hp: 250,
 
@@ -695,98 +433,44 @@ export class AdminPanel extends HTMLElement {
 
                 {
                     id: 'attack-01',
-
-                    name:
-                        this.querySelector(
-                            '#attack-1-name'
-                        ).value.trim(),
-
-                    baseDamage:
-                        Number(
-                            this.querySelector(
-                                '#attack-1-damage'
-                            ).value
-                        )
+                    name: 'Ataque 1',
+                    baseDamage: 20
                 },
 
                 {
                     id: 'attack-02',
-
-                    name:
-                        this.querySelector(
-                            '#attack-2-name'
-                        ).value.trim(),
-
-                    baseDamage:
-                        Number(
-                            this.querySelector(
-                                '#attack-2-damage'
-                            ).value
-                        )
+                    name: 'Ataque 2',
+                    baseDamage: 30
                 },
 
                 {
                     id: 'attack-03',
-
-                    name:
-                        this.querySelector(
-                            '#attack-3-name'
-                        ).value.trim(),
-
-                    baseDamage:
-                        Number(
-                            this.querySelector(
-                                '#attack-3-damage'
-                            ).value
-                        )
+                    name: 'Ataque 3',
+                    baseDamage: 40
                 },
 
                 {
                     id: 'attack-04',
-
-                    name:
-                        this.querySelector(
-                            '#attack-4-name'
-                        ).value.trim(),
-
-                    baseDamage:
-                        Number(
-                            this.querySelector(
-                                '#attack-4-damage'
-                            ).value
-                        )
+                    name: 'Ataque 4',
+                    baseDamage: 50
                 }
 
             ],
 
             defense: {
 
-                name:
-                    this.querySelector(
-                        '#defense-name'
-                    ).value.trim(),
+                name: 'Defensa',
+                damageReduction: 0.5
 
-                damageReduction:
-                    0.5
             },
 
             special: {
 
-                name:
-                    this.querySelector(
-                        '#special-name'
-                    ).value.trim(),
-
-                baseDamage:
-                    Number(
-                        this.querySelector(
-                            '#special-damage'
-                        ).value
-                    ),
-
+                name: 'Poder especial',
+                baseDamage: 65,
                 unlockTurn: 2,
-
                 cooldown: 3
+
             },
 
             sounds: {
@@ -802,19 +486,38 @@ export class AdminPanel extends HTMLElement {
 
                 defeated:
                     '/sounds/defeated.mp3'
+
             },
 
-            active:
-                this.editingCard?.active
-                ?? true,
+            active: true,
 
             createdAt:
-                this.editingCard?.createdAt
-                || new Date().toISOString()
+                new Date().toISOString()
         };
+
+        try {
+
+            await createCard(
+                newCard
+            );
+
+            this.showMessage(
+                'Carta creada correctamente.'
+            );
+
+            await this.loadCards();
+
+        } catch (error) {
+
+            console.error(error);
+
+            this.showMessage(
+                'No se pudo crear la carta.'
+            );
+        }
     }
 
-    startEdit(id) {
+    async handleEditCard(id) {
 
         const card =
             this.cards.find(
@@ -826,20 +529,84 @@ export class AdminPanel extends HTMLElement {
             return;
         }
 
-        this.editingCard =
-            card;
+        const newName =
+            prompt(
+                'Nuevo nombre:',
+                card.name
+            );
 
-        this.render();
+        if (
+            newName === null
+        ) {
+            return;
+        }
 
-        this.configureEvents();
+        const newType =
+            prompt(
+                'Nuevo tipo:',
+                card.type
+            );
 
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+        if (
+            newType === null
+        ) {
+            return;
+        }
+
+        const newDescription =
+            prompt(
+                'Nueva descripción:',
+                card.description
+            );
+
+        if (
+            newDescription === null
+        ) {
+            return;
+        }
+
+        /*
+         * PUT reemplaza la carta
+         * completa.
+         */
+        const updatedCard = {
+
+            ...card,
+
+            name:
+                newName.trim(),
+
+            type:
+                newType.trim(),
+
+            description:
+                newDescription.trim()
+        };
+
+        try {
+
+            await updateCard(
+                updatedCard,
+                id
+            );
+
+            this.showMessage(
+                'Carta actualizada correctamente con PUT.'
+            );
+
+            await this.loadCards();
+
+        } catch (error) {
+
+            console.error(error);
+
+            this.showMessage(
+                'No se pudo actualizar la carta.'
+            );
+        }
     }
 
-    async toggleCard(id) {
+    async handleToggleCard(id) {
 
         const card =
             this.cards.find(
@@ -854,10 +621,10 @@ export class AdminPanel extends HTMLElement {
         try {
 
             /*
-             * PATCH:
-             * solamente cambiamos active.
+             * PATCH solamente modifica
+             * el campo active.
              */
-            await editarCartaParcial(
+            await patchCard(
                 {
                     active:
                         !card.active
@@ -865,17 +632,23 @@ export class AdminPanel extends HTMLElement {
                 id
             );
 
+            this.showMessage(
+                'Estado de la carta actualizado con PATCH.'
+            );
+
             await this.loadCards();
 
         } catch (error) {
 
-            alert(
-                error.message
+            console.error(error);
+
+            this.showMessage(
+                'No se pudo cambiar el estado.'
             );
         }
     }
 
-    async deleteCard(id) {
+    async handleDeleteCard(id) {
 
         const card =
             this.cards.find(
@@ -898,9 +671,11 @@ export class AdminPanel extends HTMLElement {
 
         try {
 
-            await eliminarCarta(id);
+            await deleteCard(
+                id
+            );
 
-            alert(
+            this.showMessage(
                 'Carta eliminada correctamente.'
             );
 
@@ -908,33 +683,66 @@ export class AdminPanel extends HTMLElement {
 
         } catch (error) {
 
-            alert(
-                error.message
+            console.error(error);
+
+            this.showMessage(
+                'No se pudo eliminar la carta.'
             );
         }
     }
 
-    renderError() {
+    showMessage(message) {
+
+        const element =
+            this.querySelector(
+                '#admin-message'
+            );
+
+        if (!element) {
+            return;
+        }
+
+        element.textContent =
+            message;
+
+        setTimeout(
+            () => {
+
+                if (element) {
+                    element.textContent =
+                        '';
+                }
+
+            },
+            3000
+        );
+    }
+
+    showError(message) {
 
         this.innerHTML = `
             <section class="admin-section">
 
-                <div class="admin-error">
+                <div
+                    class="
+                        admin-container
+                        admin-error
+                    "
+                >
 
                     <h1>
                         ⚠️ Error
                     </h1>
 
                     <p>
-                        No se pudieron cargar
-                        las cartas.
+                        ${message}
                     </p>
 
                     <button
                         id="retry-admin"
                         class="admin-button"
                     >
-                        🔄 Reintentar
+                        🔄 Intentar nuevamente
                     </button>
 
                 </div>

@@ -1,11 +1,8 @@
-import {
-    validateAdmin
-} from '../../api/adminsApi.js';
+import { validateAdmin } from '../../api/adminsApi.js';
 
 import './adminStyles.css';
 
-export class AdminLogin
-    extends HTMLElement {
+export class AdminLogin extends HTMLElement {
 
     constructor() {
         super();
@@ -15,6 +12,7 @@ export class AdminLogin
     }
 
     render() {
+
         this.innerHTML = `
             <section class="admin-login">
 
@@ -25,23 +23,22 @@ export class AdminLogin
                     </h1>
 
                     <p>
-                        Inicia sesión para
-                        gestionar las cartas.
+                        Inicia sesión para gestionar
+                        las cartas.
                     </p>
 
-                    <form id="admin-form">
+                    <form id="admin-login-form">
 
                         <div class="form-group">
 
-                            <label
-                                for="username"
-                            >
+                            <label for="admin-username">
                                 Usuario
                             </label>
 
                             <input
                                 type="text"
-                                id="username"
+                                id="admin-username"
+                                placeholder="admin"
                                 required
                             >
 
@@ -49,31 +46,30 @@ export class AdminLogin
 
                         <div class="form-group">
 
-                            <label
-                                for="password"
-                            >
+                            <label for="admin-password">
                                 Contraseña
                             </label>
 
                             <input
                                 type="password"
-                                id="password"
+                                id="admin-password"
+                                placeholder="Contraseña"
                                 required
                             >
 
                         </div>
 
+                        <p
+                            id="admin-error"
+                            class="admin-error-message"
+                        ></p>
+
                         <button
                             type="submit"
-                            class="admin-button"
+                            class="admin-button primary"
                         >
-                            Iniciar sesión
+                            🔑 Iniciar sesión
                         </button>
-
-                        <p
-                            id="login-message"
-                            class="login-message"
-                        ></p>
 
                     </form>
 
@@ -84,9 +80,10 @@ export class AdminLogin
     }
 
     configureEvents() {
+
         const form =
             this.querySelector(
-                '#admin-form'
+                '#admin-login-form'
             );
 
         form.addEventListener(
@@ -95,60 +92,77 @@ export class AdminLogin
 
                 event.preventDefault();
 
-                const username =
-                    this.querySelector(
-                        '#username'
-                    ).value.trim();
-
-                const password =
-                    this.querySelector(
-                        '#password'
-                    ).value;
-
-                const message =
-                    this.querySelector(
-                        '#login-message'
-                    );
-
-                message.textContent =
-                    'Verificando...';
-
-                try {
-                    const admin =
-                        await validateAdmin(
-                            username,
-                            password
-                        );
-
-                    if (!admin) {
-                        message.textContent =
-                            '❌ Usuario o contraseña incorrectos.';
-
-                        return;
-                    }
-
-                    message.textContent =
-                        '✅ Acceso permitido.';
-
-                    this.dispatchEvent(
-                        new CustomEvent(
-                            'admin-authenticated',
-                            {
-                                detail: admin,
-                                bubbles: true
-                            }
-                        )
-                    );
-
-                } catch (error) {
-
-                    console.error(error);
-
-                    message.textContent =
-                        '⚠️ No se pudo validar el acceso.';
-                }
+                await this.login();
             }
         );
+    }
+
+    async login() {
+
+        const username =
+            this.querySelector(
+                '#admin-username'
+            ).value.trim();
+
+        const password =
+            this.querySelector(
+                '#admin-password'
+            ).value;
+
+        const errorMessage =
+            this.querySelector(
+                '#admin-error'
+            );
+
+        errorMessage.textContent = '';
+
+        try {
+
+            /*
+             * Consultamos los administradores
+             * mediante Fetch API.
+             */
+            const admin =
+                await validateAdmin(
+                    username,
+                    password
+                );
+
+            /*
+             * Si no existe un administrador
+             * con esas credenciales.
+             */
+            if (!admin) {
+
+                errorMessage.textContent =
+                    '❌ Usuario o contraseña incorrectos.';
+
+                return;
+            }
+
+            /*
+             * Login correcto.
+             */
+            this.dispatchEvent(
+                new CustomEvent(
+                    'admin-authenticated',
+                    {
+                        detail: admin,
+                        bubbles: true
+                    }
+                )
+            );
+
+        } catch (error) {
+
+            console.error(
+                'Error en login:',
+                error
+            );
+
+            errorMessage.textContent =
+                '⚠️ No se pudo conectar con el servidor.';
+        }
     }
 }
 

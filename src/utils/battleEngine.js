@@ -239,208 +239,169 @@ export class BattleEngine {
      * Ejecuta una acción del jugador
      * o de la máquina.
      */
-    performAction(
-        owner,
-        action
-    ) {
+    
+    performAction(owner, action) {
 
-        if (this.gameOver) {
-
-            return {
-                success: false,
-                message:
-                    'La partida ya terminó.'
-            };
-        }
-
-        if (
-            owner !== this.turn
-        ) {
-
-            return {
-                success: false,
-                message:
-                    'No es el turno de este jugador.'
-            };
-        }
-
-        const attacker =
-            this.getCurrentCard(owner);
-
-        const defender =
-            this.getOpponent(owner);
-
-        if (
-            !attacker ||
-            !defender
-        ) {
-
-            return {
-                success: false,
-                message:
-                    'No hay cartas disponibles.'
-            };
-        }
-
-        /*
-         * Al comenzar un nuevo turno propio,
-         * reducimos el cooldown.
-         *
-         * Ejemplo:
-         *
-         * cooldown 3
-         * ↓
-         * turno propio → 2
-         * ↓
-         * turno propio → 1
-         * ↓
-         * turno propio → 0
-         */
-        if (
-            attacker.specialCooldown > 0
-        ) {
-
-            attacker.specialCooldown--;
-        }
-
-        const availableActions =
-            this.getAvailableActions(
-                owner
-            );
-
-        if (
-            !availableActions.includes(
-                action
-            )
-        ) {
-
-            /*
-             * Como redujimos cooldown
-             * antes de validar, si la acción
-             * no es válida no debemos contar
-             * ese turno.
-             *
-             * El cooldown sí representa el
-             * comienzo del turno propio.
-             */
-
-            return {
-                success: false,
-                message:
-                    'Esta acción no está disponible.'
-            };
-        }
-
-        let result = null;
-
-        /*
-         * ATAQUES NORMALES
-         */
-        if (
-            action.startsWith(
-                'attack-'
-            )
-        ) {
-
-            result =
-                this.normalAttack(
-                    attacker,
-                    defender,
-                    action
-                );
-        }
-
-        /*
-         * DEFENSA
-         */
-        if (
-            action === 'defense'
-        ) {
-
-            result =
-                this.defend(
-                    attacker
-                );
-        }
-
-        /*
-         * PODER ESPECIAL
-         */
-        if (
-            action === 'special'
-        ) {
-
-            result =
-                this.specialAttack(
-                    attacker,
-                    defender
-                );
-        }
-
-        /*
-         * El turno propio se contabiliza
-         * después de realizar la acción.
-         */
-        attacker.ownTurns++;
-
-        /*
-         * Guardamos la acción en el historial.
-         */
-        this.history.push(
-            result
-        );
-
-        /*
-         * Si la carta defensora fue derrotada,
-         * entra la siguiente carta.
-         */
-        if (
-            defender.defeated
-        ) {
-
-            this.changeDefeatedCard(
-                owner === 'player'
-                    ? 'machine'
-                    : 'player'
-            );
-        }
-
-        /*
-         * Si todavía hay partida,
-         * cambiamos el turno.
-         */
-        if (
-            !this.gameOver
-        ) {
-
-            this.changeTurn();
-        }
-
+    if (this.gameOver) {
         return {
-            success: true,
+            success: false,
+            message: 'La partida ya terminó.'
+        };
+    }
 
-            ...result,
+    if (owner !== this.turn) {
+        return {
+            success: false,
+            message: 'No es el turno de este jugador.'
+        };
+    }
 
-            gameOver:
-                this.gameOver,
+    const attacker =
+        this.getCurrentCard(owner);
 
-            winner:
-                this.winner,
+    const defender =
+        this.getOpponent(owner);
 
-            turn:
-                this.turn,
-
-            playerCard:
-                this.getPlayerCard(),
-
-            machineCard:
-                this.getMachineCard()
+    if (!attacker || !defender) {
+        return {
+            success: false,
+            message: 'No hay cartas disponibles.'
         };
     }
 
     /*
-     * Ataque normal.
+     * Primero obtenemos las acciones disponibles.
      */
+    const availableActions =
+        this.getAvailableActions(owner);
+
+    /*
+     * Comprobamos que la acción exista
+     * antes de modificar cualquier estado.
+     */
+    if (!availableActions.includes(action)) {
+
+        return {
+            success: false,
+            message: 'Esta acción no está disponible.'
+        };
+    }
+
+    /*
+     * El cooldown disminuye al comenzar
+     * un nuevo turno propio.
+     *
+     * Como la acción ya fue validada,
+     * aquí sí podemos actualizarlo.
+     */
+    if (attacker.specialCooldown > 0) {
+        attacker.specialCooldown--;
+    }
+
+    let result = null;
+
+    /*
+     * ATAQUE NORMAL
+     */
+    if (action.startsWith('attack-')) {
+
+        result =
+            this.normalAttack(
+                attacker,
+                defender,
+                action
+            );
+    }
+
+    /*
+     * DEFENSA
+     */
+    else if (action === 'defense') {
+
+        result =
+            this.defend(
+                attacker
+            );
+    }
+
+    /*
+     * PODER ESPECIAL
+     */
+    else if (action === 'special') {
+
+        result =
+            this.specialAttack(
+                attacker,
+                defender
+            );
+    }
+
+    /*
+     * Si por alguna razón no se generó
+     * ningún resultado, detenemos la acción.
+     */
+    if (!result) {
+
+        return {
+            success: false,
+            message: 'No se pudo ejecutar la acción.'
+        };
+    }
+
+    /*
+     * La carta acaba de realizar
+     * un turno propio.
+     */
+    attacker.ownTurns++;
+
+    /*
+     * Guardamos la acción.
+     */
+    this.history.push(result);
+
+    /*
+     * Si el defensor fue derrotado,
+     * entra su siguiente carta.
+     */
+    if (defender.defeated) {
+
+        this.changeDefeatedCard(
+            owner === 'player'
+                ? 'machine'
+                : 'player'
+        );
+    }
+
+    /*
+     * Si la partida continúa,
+     * cambiamos el turno.
+     */
+    if (!this.gameOver) {
+        this.changeTurn();
+    }
+
+    return {
+        success: true,
+
+        ...result,
+
+        gameOver:
+            this.gameOver,
+
+        winner:
+            this.winner,
+
+        turn:
+            this.turn,
+
+        playerCard:
+            this.getPlayerCard(),
+
+        machineCard:
+            this.getMachineCard()
+    };
+}
+
     normalAttack(
         attacker,
         defender,

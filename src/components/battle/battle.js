@@ -12,6 +12,7 @@ export class BattleComponent extends HTMLElement {
         this.player = null;
         this.logs = [];
         this.startedAt = null;
+        this.resultSaved = false;
 
         this.renderLoading();
     }
@@ -38,10 +39,6 @@ export class BattleComponent extends HTMLElement {
         this.render();
         this.configureEvents();
 
-        /*
-         * Si la máquina empieza,
-         * realiza automáticamente su turno.
-         */
         if (
             this.engine.turn === 'machine'
         ) {
@@ -106,18 +103,16 @@ export class BattleComponent extends HTMLElement {
                     <div
                         class="
                             turn-indicator
-                            ${
-                                state.turn === 'player'
-                                    ? 'player-turn'
-                                    : 'machine-turn'
-                            }
+                            ${state.turn === 'player'
+                ? 'player-turn'
+                : 'machine-turn'
+            }
                         "
                     >
-                        ${
-                            state.turn === 'player'
-                                ? '🎮 Tu turno'
-                                : '🤖 Turno de la máquina'
-                        }
+                        ${state.turn === 'player'
+                ? '🎮 Tu turno'
+                : '🤖 Turno de la máquina'
+            }
                     </div>
 
                     <div class="round-indicator">
@@ -129,27 +124,26 @@ export class BattleComponent extends HTMLElement {
                 <main class="battle-arena">
 
                     ${this.renderCard(
-                        playerCard,
-                        'user'
-                    )}
+                playerCard,
+                'user'
+            )}
 
                     <div class="vs">
                         VS
                     </div>
 
                     ${this.renderCard(
-                        machineCard,
-                        'machine'
-                    )}
+                machineCard,
+                'machine'
+            )}
 
                 </main>
 
-                ${
-                    state.turn === 'player'
-                        ? this.renderControls(
-                            playerCard
-                        )
-                        : `
+                ${state.turn === 'player'
+                ? this.renderControls(
+                    playerCard
+                )
+                : `
                             <div
                                 class="
                                     battle-controls
@@ -168,7 +162,7 @@ export class BattleComponent extends HTMLElement {
 
                             </div>
                         `
-                }
+            }
 
                 ${this.renderLog()}
 
@@ -219,36 +213,29 @@ export class BattleComponent extends HTMLElement {
                 <div
                     class="
                         player-label
-                        ${
-                            owner === 'user'
-                                ? 'user'
-                                : 'machine'
-                        }
+                        ${owner === 'user'
+                ? 'user'
+                : 'machine'
+            }
                     "
                 >
-                    ${
-                        owner === 'user'
-                            ? `🎮 ${
-                                this.player?.nickname
-                                || 'Jugador'
-                            }`
-                            : '🤖 Máquina'
-                    }
+                    ${owner === 'user'
+                ? `🎮 ${this.player?.nickname || 'Jugador'}`
+                : '🤖 Máquina'
+            }
                 </div>
 
                 <article
                     class="
                         battle-card
-                        ${
-                            card.isDefending
-                                ? 'defending'
-                                : ''
-                        }
-                        ${
-                            card.defeated
-                                ? 'defeated'
-                                : ''
-                        }
+                        ${card.isDefending
+                ? 'defending'
+                : ''
+            }
+                        ${card.defeated
+                ? 'defeated'
+                : ''
+            }
                     "
                 >
 
@@ -304,9 +291,8 @@ export class BattleComponent extends HTMLElement {
 
                         <div class="card-status">
 
-                            ${
-                                card.isDefending
-                                    ? `
+                            ${card.isDefending
+                ? `
                                         <span
                                             class="
                                                 defending-status
@@ -315,12 +301,11 @@ export class BattleComponent extends HTMLElement {
                                             🛡️ Defendiendo
                                         </span>
                                     `
-                                    : ''
-                            }
+                : ''
+            }
 
-                            ${
-                                card.defeated
-                                    ? `
+                            ${card.defeated
+                ? `
                                         <span
                                             class="
                                                 defeated-status
@@ -329,8 +314,8 @@ export class BattleComponent extends HTMLElement {
                                             💀 Derrotada
                                         </span>
                                     `
-                                    : ''
-                            }
+                : ''
+            }
 
                         </div>
 
@@ -367,13 +352,12 @@ export class BattleComponent extends HTMLElement {
 
                 <div class="attack-buttons">
 
-                    ${
-                        card.attacks
-                            .map(
-                                (
-                                    attack,
-                                    index
-                                ) => `
+                    ${card.attacks
+                .map(
+                    (
+                        attack,
+                        index
+                    ) => `
                                     <button
                                         class="
                                             battle-button
@@ -392,9 +376,9 @@ export class BattleComponent extends HTMLElement {
 
                                     </button>
                                 `
-                            )
-                            .join('')
-                    }
+                )
+                .join('')
+            }
 
                 </div>
 
@@ -419,18 +403,16 @@ export class BattleComponent extends HTMLElement {
                     class="
                         battle-button
                         special-button
-                        ${
-                            specialAvailable
-                                ? 'available'
-                                : 'locked'
-                        }
+                        ${specialAvailable
+                ? 'available'
+                : 'locked'
+            }
                     "
                     data-action="special"
-                    ${
-                        specialAvailable
-                            ? ''
-                            : 'disabled'
-                    }
+                    ${specialAvailable
+                ? ''
+                : 'disabled'
+            }
                 >
 
                     ⚡
@@ -438,14 +420,12 @@ export class BattleComponent extends HTMLElement {
 
                     <small>
 
-                        ${
-                            specialAvailable
-                                ? 'PODER DISPONIBLE'
-                                : cooldown > 0
-                                    ? `Cooldown: ${cooldown}`
-                                    : `Disponible desde
-                                       tu turno ${unlockTurn}`
-                        }
+                        ${specialAvailable
+                ? 'PODER DISPONIBLE'
+                : cooldown > 0
+                    ? `Cooldown: ${cooldown}`
+                    : `Disponible desde tu turno ${unlockTurn}`
+            }
 
                     </small>
 
@@ -464,26 +444,25 @@ export class BattleComponent extends HTMLElement {
                     📜 Registro de combate
                 </h3>
 
-                ${
-                    this.logs.length
-                        ? this.logs
-                            .map(
-                                (log) => `
+                ${this.logs.length
+                ? this.logs
+                    .map(
+                        (log) => `
                                     <div
                                         class="log-entry"
                                     >
                                         ${log}
                                     </div>
                                 `
-                            )
-                            .join('')
-                        : `
+                    )
+                    .join('')
+                : `
                             <div class="log-entry">
                                 La batalla está
                                 por comenzar...
                             </div>
                         `
-                }
+            }
 
             </section>
         `;
@@ -502,10 +481,6 @@ export class BattleComponent extends HTMLElement {
                         'click',
                         () => {
 
-                            /*
-                             * trim() elimina espacios
-                             * y saltos de línea.
-                             */
                             const action =
                                 button
                                     .dataset
@@ -558,15 +533,15 @@ export class BattleComponent extends HTMLElement {
             result
         );
 
-        /*
-         * La animación se ejecuta después
-         * de realizar la acción.
-         */
         this.playActionAnimation(
             result.type,
             'player'
         );
 
+        /*
+         * Si terminó la partida,
+         * mostramos el resultado.
+         */
         if (result.gameOver) {
 
             this.render();
@@ -581,12 +556,44 @@ export class BattleComponent extends HTMLElement {
             return;
         }
 
-        this.render();
-
         /*
-         * Si ahora es turno de la máquina,
-         * esperamos un segundo.
+         * Si una carta fue derrotada,
+         * mostramos brevemente el estado
+         * antes de continuar.
          */
+        if (result.defeated) {
+
+            this.render();
+
+            setTimeout(
+                () => {
+
+                    this.configureEvents();
+
+                    if (
+                        this.engine.turn === 'machine'
+                    ) {
+
+                        this.renderMachineThinking();
+
+                        setTimeout(
+                            () => {
+                                this.machineAction();
+                            },
+                            700
+                        );
+                    }
+
+                },
+                700
+            );
+
+            return;
+        }
+
+        this.render();
+        this.configureEvents();
+
         if (
             this.engine.turn === 'machine'
         ) {
@@ -634,6 +641,7 @@ export class BattleComponent extends HTMLElement {
         if (result.gameOver) {
 
             this.render();
+            this.configureEvents();
 
             setTimeout(
                 () => {
@@ -645,7 +653,29 @@ export class BattleComponent extends HTMLElement {
             return;
         }
 
+        /*
+         * Si la máquina derrotó la carta
+         * del jugador, dejamos un pequeño
+         * tiempo antes de continuar.
+         */
+        if (result.defeated) {
+
+            this.render();
+
+            setTimeout(
+                () => {
+
+                    this.configureEvents();
+
+                },
+                700
+            );
+
+            return;
+        }
+
         this.render();
+        this.configureEvents();
     }
 
     renderMachineThinking() {
@@ -798,6 +828,127 @@ export class BattleComponent extends HTMLElement {
         owner
     ) {
 
+        const attackerSelector =
+            owner === 'player'
+                ? '.battle-player:first-child .battle-card'
+                : '.battle-player:last-child .battle-card';
+
+        const defenderSelector =
+            owner === 'player'
+                ? '.battle-player:last-child .battle-card'
+                : '.battle-player:first-child .battle-card';
+
+        const attacker =
+            this.querySelector(
+                attackerSelector
+            );
+
+        const defender =
+            this.querySelector(
+                defenderSelector
+            );
+
+        if (!attacker) {
+            return;
+        }
+
+        attacker.classList.remove(
+            'animate-attack',
+            'animate-defense',
+            'animate-special'
+        );
+
+        if (defender) {
+
+            defender.classList.remove(
+                'animate-damage'
+            );
+        }
+
+        void attacker.offsetWidth;
+
+        if (defender) {
+            void defender.offsetWidth;
+        }
+
+        if (
+            type === 'attack'
+        ) {
+
+            attacker.classList.add(
+                'animate-attack'
+            );
+
+            setTimeout(
+                () => {
+
+                    if (!defender) {
+                        return;
+                    }
+
+                    defender.classList.add(
+                        'animate-damage'
+                    );
+
+                },
+                250
+            );
+
+        } else if (
+            type === 'defense'
+        ) {
+
+            attacker.classList.add(
+                'animate-defense'
+            );
+
+        } else if (
+            type === 'special'
+        ) {
+
+            attacker.classList.add(
+                'animate-special'
+            );
+
+            setTimeout(
+                () => {
+
+                    if (!defender) {
+                        return;
+                    }
+
+                    defender.classList.add(
+                        'animate-damage'
+                    );
+
+                },
+                300
+            );
+        }
+
+        setTimeout(
+            () => {
+
+                attacker.classList.remove(
+                    'animate-attack',
+                    'animate-defense',
+                    'animate-special'
+                );
+
+                if (defender) {
+
+                    defender.classList.remove(
+                        'animate-damage'
+                    );
+                }
+
+            },
+            800
+        );
+    }
+
+    playDefeatedAnimation(owner) {
+
         const selector =
             owner === 'player'
                 ? '.battle-player:first-child .battle-card'
@@ -813,58 +964,17 @@ export class BattleComponent extends HTMLElement {
         }
 
         card.classList.remove(
-            'animate-attack',
-            'animate-defense',
-            'animate-special',
-            'animate-damage'
+            'defeated-animation'
         );
 
-        /*
-         * Fuerza al navegador a reiniciar
-         * la animación.
-         */
         void card.offsetWidth;
 
-        if (
-            type === 'attack'
-        ) {
-
-            card.classList.add(
-                'animate-attack'
-            );
-
-        } else if (
-            type === 'defense'
-        ) {
-
-            card.classList.add(
-                'animate-defense'
-            );
-
-        } else if (
-            type === 'special'
-        ) {
-
-            card.classList.add(
-                'animate-special'
-            );
-        }
-
-        setTimeout(
-            () => {
-
-                card.classList.remove(
-                    'animate-attack',
-                    'animate-defense',
-                    'animate-special'
-                );
-
-            },
-            600
+        card.classList.add(
+            'defeated-animation'
         );
     }
 
-    showResult() {
+    async showResult() {
 
         const resultContainer =
             this.querySelector(
@@ -878,12 +988,19 @@ export class BattleComponent extends HTMLElement {
         const won =
             this.engine.winner === 'player';
 
+        const result =
+            won
+                ? 'win'
+                : 'loss';
+
+        const pointsAwarded =
+            won
+                ? 50
+                : 10;
+
         if (won) {
-
             playSound('victory');
-
         } else {
-
             playSound('defeat');
         }
 
@@ -891,51 +1008,41 @@ export class BattleComponent extends HTMLElement {
             <div
                 class="
                     battle-result
-                    ${
-                        won
-                            ? 'victory'
-                            : 'defeat'
-                    }
+                    ${won
+                ? 'victory'
+                : 'defeat'
+            }
                 "
             >
 
                 <div class="result-card">
 
                     <h2>
-                        ${
-                            won
-                                ? '🏆 ¡VICTORIA!'
-                                : '💀 DERROTA'
-                        }
+                        ${won
+                ? '🏆 ¡VICTORIA!'
+                : '💀 DERROTA'
+            }
                     </h2>
 
                     <p>
-                        ${
-                            won
-                                ? `¡Felicidades ${
-                                    this.player?.nickname
-                                    || 'Jugador'
-                                }!`
-                                : `
-                                    La máquina ganó
-                                    esta batalla.
-                                `
-                        }
+                        ${won
+                ? `¡Felicidades ${this.player?.nickname || 'Jugador'}!`
+                : 'La máquina ganó esta batalla.'
+            }
                     </p>
 
                     <p>
-                        ${
-                            won
-                                ? 'Has conseguido +50 puntos.'
-                                : 'Has conseguido +10 puntos.'
-                        }
+                        Puntos obtenidos:
+                        <strong>
+                            +${pointsAwarded}
+                        </strong>
                     </p>
 
                     <button
                         class="result-button"
                         id="finish-battle"
                     >
-                        Continuar
+                        Ver leaderboard
                     </button>
 
                 </div>
@@ -958,13 +1065,15 @@ export class BattleComponent extends HTMLElement {
                                 player:
                                     this.player,
 
-                                result:
-                                    won
-                                        ? 'win'
-                                        : 'loss',
+                                result,
+
+                                pointsAwarded,
 
                                 engine:
-                                    this.engine
+                                    this.engine,
+
+                                startedAt:
+                                    this.startedAt
                             },
 
                             bubbles: true

@@ -48,9 +48,7 @@ export class GameApp extends HTMLElement {
         adminButton.addEventListener(
             'click',
             () => {
-
                 this.showAdminLogin();
-
             }
         );
     }
@@ -58,7 +56,7 @@ export class GameApp extends HTMLElement {
     configureEvents() {
 
         /*
-         * Registro del jugador
+         * Registro del jugador.
          */
         this.addEventListener(
             'player-registered',
@@ -72,7 +70,7 @@ export class GameApp extends HTMLElement {
         );
 
         /*
-         * Jugador terminó de seleccionar
+         * El jugador terminó de seleccionar
          * sus cinco cartas.
          */
         this.addEventListener(
@@ -107,7 +105,6 @@ export class GameApp extends HTMLElement {
             () => {
 
                 this.showDeckSelector();
-
             }
         );
 
@@ -119,7 +116,6 @@ export class GameApp extends HTMLElement {
             () => {
 
                 this.showAdminPanel();
-
             }
         );
 
@@ -131,7 +127,6 @@ export class GameApp extends HTMLElement {
             () => {
 
                 this.renderRegister();
-
             }
         );
     }
@@ -162,7 +157,6 @@ export class GameApp extends HTMLElement {
             () => {
 
                 this.renderRegister();
-
             }
         );
     }
@@ -218,35 +212,54 @@ export class GameApp extends HTMLElement {
                     ? 50
                     : 10;
 
+            /*
+             * Valores actuales del jugador.
+             */
+            const currentPoints =
+                Number(
+                    this.currentPlayer.points
+                ) || 0;
+
+            const currentWins =
+                Number(
+                    this.currentPlayer.wins
+                ) || 0;
+
+            const currentLosses =
+                Number(
+                    this.currentPlayer.losses
+                ) || 0;
+
+            const currentGames =
+                Number(
+                    this.currentPlayer.gamesPlayed
+                ) || 0;
+
+            /*
+             * Nuevas estadísticas.
+             */
             const updatedPlayer = {
 
                 points:
-                    this.currentPlayer.points
-                    + points,
+                    currentPoints + points,
 
                 wins:
-                    this.currentPlayer.wins
-                    + (
-                        won
-                            ? 1
-                            : 0
-                    ),
+                    currentWins +
+                    (won ? 1 : 0),
 
                 losses:
-                    this.currentPlayer.losses
-                    + (
-                        won
-                            ? 0
-                            : 1
-                    ),
+                    currentLosses +
+                    (won ? 0 : 1),
 
                 gamesPlayed:
-                    this.currentPlayer.gamesPlayed
-                    + 1
+                    currentGames + 1
             };
 
             /*
-             * PATCH del jugador.
+             * PATCH /players/:id
+             *
+             * Actualizamos únicamente
+             * las estadísticas modificadas.
              */
             const savedPlayer =
                 await patchPlayer(
@@ -254,15 +267,23 @@ export class GameApp extends HTMLElement {
                     this.currentPlayer.id
                 );
 
+            /*
+             * Actualizamos el jugador
+             * que tenemos en memoria.
+             */
             this.currentPlayer =
                 savedPlayer;
 
             /*
-             * Estado final de la batalla.
+             * Obtenemos el estado final
+             * del motor de batalla.
              */
             const state =
                 data.engine.getState();
 
+            /*
+             * Creamos el registro histórico.
+             */
             const battle = {
 
                 id:
@@ -293,16 +314,33 @@ export class GameApp extends HTMLElement {
                     ),
 
                 startedAt:
-                    data.engine.startedAt,
+                    data.startedAt,
 
                 endedAt:
                     new Date().toISOString()
             };
 
+            /*
+             * POST /battles
+             */
             await createBattle(
                 battle
             );
 
+            console.log(
+                'Jugador actualizado:',
+                this.currentPlayer
+            );
+
+            console.log(
+                'Batalla guardada:',
+                battle
+            );
+
+            /*
+             * Después de guardar todo,
+             * mostramos el leaderboard.
+             */
             this.showLeaderboard();
 
         } catch (error) {
@@ -321,8 +359,7 @@ export class GameApp extends HTMLElement {
     showLeaderboard() {
 
         this.innerHTML = `
-            <leaderboard-component>
-            </leaderboard-component>
+            <leaderboard-component></leaderboard-component>
         `;
     }
 
@@ -366,7 +403,6 @@ export class GameApp extends HTMLElement {
             () => {
 
                 this.showLeaderboard();
-
             }
         );
     }
