@@ -105,6 +105,24 @@
       "losses": 0,
       "gamesPlayed": 1,
       "createdAt": "2026-08-19T03:45:09.660Z"
+    },
+    {
+      "id": "raSCv97J12w",
+      "nickname": "q",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-19T23:43:57.570Z"
+    },
+    {
+      "id": "bP8HWy1pZVw",
+      "nickname": "e",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-19T23:47:17.392Z"
     }
   ],
   "cards": [
