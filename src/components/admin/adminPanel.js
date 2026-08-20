@@ -14,9 +14,9 @@ export class AdminPanel extends HTMLElement {
         super();
 
         this.cards = [];
+        this.editingCardId = null;
 
         this.renderLoading();
-
         this.loadCards();
     }
 
@@ -45,8 +45,7 @@ export class AdminPanel extends HTMLElement {
 
         try {
 
-            this.cards =
-                await getCards();
+            this.cards = await getCards();
 
             this.render();
 
@@ -91,56 +90,357 @@ export class AdminPanel extends HTMLElement {
 
                     </header>
 
-                    <section
-                        class="admin-create-section"
-                    >
+
+                    <!-- ========================= -->
+                    <!-- FORMULARIO -->
+                    <!-- ========================= -->
+
+                    <section class="admin-create-section">
 
                         <h2>
-                            ➕ Crear nueva carta
+                            ${this.editingCardId
+                ? '✏️ Editar carta'
+                : '➕ Crear nueva carta'
+            }
                         </h2>
 
+
                         <form
-                            id="create-card-form"
+                            id="card-form"
                             class="card-form"
                         >
 
-                            <input
-                                type="text"
-                                id="card-name"
-                                placeholder="Nombre de la carta"
-                                required
-                            >
+                            <!-- INFORMACIÓN BÁSICA -->
 
-                            <input
-                                type="text"
-                                id="card-type"
-                                placeholder="Elemento / Tipo"
-                                required
-                            >
+                            <h3>
+                                📋 Información básica
+                            </h3>
 
-                            <input
-                                type="text"
-                                id="card-image"
-                                placeholder="/images/cards/carta.webp"
-                                required
-                            >
 
-                            <textarea
-                                id="card-description"
-                                placeholder="Descripción"
-                                required
-                            ></textarea>
+                            <label>
+                                Nombre
 
-                            <button
-                                type="submit"
-                                class="admin-button"
-                            >
-                                ➕ Crear carta
-                            </button>
+                                <input
+                                    type="text"
+                                    id="card-name"
+                                    placeholder="Nombre de la carta"
+                                    required
+                                >
+
+                            </label>
+
+
+                            <label>
+                                Tipo
+
+                                <input
+                                    type="text"
+                                    id="card-type"
+                                    placeholder="Elemento / Tipo"
+                                    required
+                                >
+
+                            </label>
+
+
+                            <label>
+                                Imagen
+
+                                <input
+                                    type="text"
+                                    id="card-image"
+                                    placeholder="/images/cards/carta.webp"
+                                    required
+                                >
+
+                            </label>
+
+
+                            <label>
+                                Descripción
+
+                                <textarea
+                                    id="card-description"
+                                    placeholder="Descripción"
+                                    required
+                                ></textarea>
+
+                            </label>
+
+
+                            <!-- ========================= -->
+                            <!-- ATAQUES -->
+                            <!-- ========================= -->
+
+                            <h3>
+                                ⚔️ Ataques
+                            </h3>
+
+
+                            <div class="attack-fields">
+
+                                <div>
+
+                                    <label>
+                                        Ataque 1
+
+                                        <input
+                                            type="text"
+                                            id="attack-1-name"
+                                            placeholder="Nombre ataque 1"
+                                            required
+                                        >
+
+                                    </label>
+
+                                    <label>
+                                        Daño
+
+                                        <input
+                                            type="number"
+                                            id="attack-1-damage"
+                                            min="1"
+                                            required
+                                        >
+
+                                    </label>
+
+                                </div>
+
+
+                                <div>
+
+                                    <label>
+                                        Ataque 2
+
+                                        <input
+                                            type="text"
+                                            id="attack-2-name"
+                                            placeholder="Nombre ataque 2"
+                                            required
+                                        >
+
+                                    </label>
+
+                                    <label>
+                                        Daño
+
+                                        <input
+                                            type="number"
+                                            id="attack-2-damage"
+                                            min="1"
+                                            required
+                                        >
+
+                                    </label>
+
+                                </div>
+
+
+                                <div>
+
+                                    <label>
+                                        Ataque 3
+
+                                        <input
+                                            type="text"
+                                            id="attack-3-name"
+                                            placeholder="Nombre ataque 3"
+                                            required
+                                        >
+
+                                    </label>
+
+                                    <label>
+                                        Daño
+
+                                        <input
+                                            type="number"
+                                            id="attack-3-damage"
+                                            min="1"
+                                            required
+                                        >
+
+                                    </label>
+
+                                </div>
+
+
+                                <div>
+
+                                    <label>
+                                        Ataque 4
+
+                                        <input
+                                            type="text"
+                                            id="attack-4-name"
+                                            placeholder="Nombre ataque 4"
+                                            required
+                                        >
+
+                                    </label>
+
+                                    <label>
+                                        Daño
+
+                                        <input
+                                            type="number"
+                                            id="attack-4-damage"
+                                            min="1"
+                                            required
+                                        >
+
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ========================= -->
+                            <!-- DEFENSA -->
+                            <!-- ========================= -->
+
+                            <h3>
+                                🛡️ Defensa
+                            </h3>
+
+
+                            <label>
+                                Nombre de defensa
+
+                                <input
+                                    type="text"
+                                    id="defense-name"
+                                    placeholder="Escudo de Aire"
+                                    required
+                                >
+
+                            </label>
+
+
+                            <label>
+                                Reducción de daño
+
+                                <input
+                                    type="number"
+                                    id="defense-reduction"
+                                    min="0"
+                                    max="1"
+                                    step="0.1"
+                                    value="0.5"
+                                    required
+                                >
+
+                                <small>
+                                    0.5 = 50%
+                                </small>
+
+                            </label>
+
+
+                            <!-- ========================= -->
+                            <!-- ESPECIAL -->
+                            <!-- ========================= -->
+
+                            <h3>
+                                ⚡ Habilidad especial
+                            </h3>
+
+
+                            <label>
+                                Nombre del especial
+
+                                <input
+                                    type="text"
+                                    id="special-name"
+                                    placeholder="Estado Avatar"
+                                    required
+                                >
+
+                            </label>
+
+
+                            <label>
+                                Daño especial
+
+                                <input
+                                    type="number"
+                                    id="special-damage"
+                                    min="1"
+                                    required
+                                >
+
+                            </label>
+
+
+                            <label>
+                                Turno de desbloqueo
+
+                                <input
+                                    type="number"
+                                    id="special-unlock-turn"
+                                    min="1"
+                                    required
+                                >
+
+                            </label>
+
+
+                            <label>
+                                Cooldown
+
+                                <input
+                                    type="number"
+                                    id="special-cooldown"
+                                    min="1"
+                                    required
+                                >
+
+                            </label>
+
+
+                            <!-- BOTONES -->
+
+                            <div class="form-actions">
+
+                                <button
+                                    type="submit"
+                                    class="admin-button primary"
+                                >
+                                    ${this.editingCardId
+                ? '💾 Guardar cambios'
+                : '➕ Crear carta'
+            }
+                                </button>
+
+
+                                ${this.editingCardId
+                ? `
+                                            <button
+                                                type="button"
+                                                id="cancel-edit"
+                                                class="
+                                                    admin-button
+                                                    secondary
+                                                "
+                                            >
+                                                ❌ Cancelar
+                                            </button>
+                                        `
+                : ''
+            }
+
+                            </div>
 
                         </form>
 
                     </section>
+
+
+                    <!-- ========================= -->
+                    <!-- LISTA DE CARTAS -->
+                    <!-- ========================= -->
 
                     <section class="admin-cards-section">
 
@@ -148,10 +448,12 @@ export class AdminPanel extends HTMLElement {
                             🃏 Cartas registradas
                         </h2>
 
+
                         <div
                             id="admin-message"
                             class="admin-message"
                         ></div>
+
 
                         <div
                             id="admin-cards-grid"
@@ -165,7 +467,8 @@ export class AdminPanel extends HTMLElement {
                             card
                         )
                 )
-                .join('')}
+                .join('')
+            }
 
                         </div>
 
@@ -179,15 +482,14 @@ export class AdminPanel extends HTMLElement {
         this.configureEvents();
     }
 
+
     createCardHTML(card) {
 
         return `
             <article
                 class="
                     admin-card
-                    ${card.active
-                ? ''
-                : 'inactive'}
+                    ${card.active ? '' : 'inactive'}
                 "
                 data-id="${card.id}"
             >
@@ -197,21 +499,25 @@ export class AdminPanel extends HTMLElement {
                     alt="${card.name}"
                 >
 
+
                 <div class="admin-card-content">
 
                     <h3>
                         ${card.name}
                     </h3>
 
+
                     <p>
                         Tipo:
                         ${card.type}
                     </p>
 
+
                     <p>
                         HP:
                         ${card.hp}
                     </p>
+
 
                     <p>
                         Estado:
@@ -220,6 +526,7 @@ export class AdminPanel extends HTMLElement {
                 : '🔴 Inactiva'
             }
                     </p>
+
 
                     <div class="admin-card-actions">
 
@@ -230,6 +537,7 @@ export class AdminPanel extends HTMLElement {
                             ✏️ Editar
                         </button>
 
+
                         <button
                             class="toggle-button"
                             data-id="${card.id}"
@@ -239,6 +547,7 @@ export class AdminPanel extends HTMLElement {
                 : '🟢 Activar'
             }
                         </button>
+
 
                         <button
                             class="delete-button"
@@ -255,29 +564,53 @@ export class AdminPanel extends HTMLElement {
         `;
     }
 
+
     configureEvents() {
 
-        /*
-         * Crear carta.
-         */
-        const createForm =
+        const form =
             this.querySelector(
-                '#create-card-form'
+                '#card-form'
             );
 
-        createForm.addEventListener(
-            'submit',
-            (event) => {
+        if (form) {
 
-                event.preventDefault();
+            form.addEventListener(
+                'submit',
+                (event) => {
 
-                this.handleCreateCard();
-            }
-        );
+                    event.preventDefault();
+
+                    this.handleSaveCard();
+
+                }
+            );
+        }
+
+
+        const cancelButton =
+            this.querySelector(
+                '#cancel-edit'
+            );
+
+        if (cancelButton) {
+
+            cancelButton.addEventListener(
+                'click',
+                () => {
+
+                    this.editingCardId = null;
+
+                    this.render();
+
+                }
+            );
+        }
+
 
         /*
-         * Editar carta.
+         * EDITAR
          */
+
         this.querySelectorAll(
             '.edit-button'
         ).forEach(
@@ -287,19 +620,21 @@ export class AdminPanel extends HTMLElement {
                     'click',
                     () => {
 
-                        this.handleEditCard(
+                        this.startEdit(
                             button.dataset.id
                         );
+
                     }
                 );
+
             }
         );
 
+
         /*
-         * Activar / desactivar.
-         *
-         * Esto utiliza PATCH.
+         * ACTIVAR / DESACTIVAR
          */
+
         this.querySelectorAll(
             '.toggle-button'
         ).forEach(
@@ -312,14 +647,18 @@ export class AdminPanel extends HTMLElement {
                         this.handleToggleCard(
                             button.dataset.id
                         );
+
                     }
                 );
+
             }
         );
 
+
         /*
-         * Eliminar carta.
+         * ELIMINAR
          */
+
         this.querySelectorAll(
             '.delete-button'
         ).forEach(
@@ -332,33 +671,205 @@ export class AdminPanel extends HTMLElement {
                         this.handleDeleteCard(
                             button.dataset.id
                         );
+
                     }
                 );
+
             }
         );
+
 
         /*
-         * Cerrar sesión.
+         * LOGOUT
          */
-        this.querySelector(
-            '#logout-button'
-        ).addEventListener(
-            'click',
-            () => {
 
-                this.dispatchEvent(
-                    new CustomEvent(
-                        'admin-logout',
-                        {
-                            bubbles: true
-                        }
-                    )
-                );
-            }
-        );
+        const logoutButton =
+            this.querySelector(
+                '#logout-button'
+            );
+
+        if (logoutButton) {
+
+            logoutButton.addEventListener(
+                'click',
+                () => {
+
+                    this.dispatchEvent(
+                        new CustomEvent(
+                            'admin-logout',
+                            {
+                                bubbles: true
+                            }
+                        )
+                    );
+
+                }
+            );
+        }
     }
 
-    async handleCreateCard() {
+
+    /*
+     * =====================================================
+     * EDITAR
+     * =====================================================
+     */
+
+    startEdit(id) {
+
+        const card =
+            this.cards.find(
+                (item) =>
+                    item.id === id
+            );
+
+        if (!card) {
+            return;
+        }
+
+        this.editingCardId = id;
+
+        this.render();
+
+
+        /*
+         * INFORMACIÓN BÁSICA
+         */
+
+        this.querySelector(
+            '#card-name'
+        ).value =
+            card.name || '';
+
+        this.querySelector(
+            '#card-type'
+        ).value =
+            card.type || '';
+
+        this.querySelector(
+            '#card-image'
+        ).value =
+            card.image || '';
+
+        this.querySelector(
+            '#card-description'
+        ).value =
+            card.description || '';
+
+
+        /*
+         * ATAQUES
+         */
+
+        const attacks =
+            card.attacks || [];
+
+
+        attacks.forEach(
+            (attack, index) => {
+
+                const number =
+                    index + 1;
+
+                const nameInput =
+                    this.querySelector(
+                        `#attack-${number}-name`
+                    );
+
+                const damageInput =
+                    this.querySelector(
+                        `#attack-${number}-damage`
+                    );
+
+                if (nameInput) {
+
+                    nameInput.value =
+                        attack.name || '';
+
+                }
+
+                if (damageInput) {
+
+                    damageInput.value =
+                        attack.baseDamage || 0;
+
+                }
+
+            }
+        );
+
+
+        /*
+         * DEFENSA
+         */
+
+        this.querySelector(
+            '#defense-name'
+        ).value =
+            card.defense?.name || '';
+
+        this.querySelector(
+            '#defense-reduction'
+        ).value =
+            card.defense?.damageReduction ?? 0.5;
+
+
+        /*
+         * ESPECIAL
+         */
+
+        this.querySelector(
+            '#special-name'
+        ).value =
+            card.special?.name || '';
+
+        this.querySelector(
+            '#special-damage'
+        ).value =
+            card.special?.baseDamage || 0;
+
+        this.querySelector(
+            '#special-unlock-turn'
+        ).value =
+            card.special?.unlockTurn || 1;
+
+        this.querySelector(
+            '#special-cooldown'
+        ).value =
+            card.special?.cooldown || 1;
+
+
+        /*
+         * Subir al formulario.
+         */
+
+        const form =
+            this.querySelector(
+                '#card-form'
+            );
+
+        if (form) {
+
+            form.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+
+        }
+    }
+
+
+    /*
+     * =====================================================
+     * GUARDAR
+     * =====================================================
+     */
+
+    async handleSaveCard() {
+
+        /*
+         * INFORMACIÓN BÁSICA
+         */
 
         const name =
             this.querySelector(
@@ -380,11 +891,120 @@ export class AdminPanel extends HTMLElement {
                 '#card-description'
             ).value.trim();
 
+
+        /*
+         * ATAQUES
+         */
+
+        const attacks = [];
+
+        for (
+            let index = 1;
+            index <= 4;
+            index++
+        ) {
+
+            const attackName =
+                this.querySelector(
+                    `#attack-${index}-name`
+                ).value.trim();
+
+            const attackDamage =
+                Number(
+                    this.querySelector(
+                        `#attack-${index}-damage`
+                    ).value
+                );
+
+
+            if (
+                !attackName ||
+                !attackDamage ||
+                attackDamage <= 0
+            ) {
+
+                this.showMessage(
+                    `El ataque ${index} no es válido.`
+                );
+
+                return;
+            }
+
+
+            attacks.push({
+
+                id:
+                    `attack-0${index}`,
+
+                name:
+                    attackName,
+
+                baseDamage:
+                    attackDamage
+
+            });
+        }
+
+
+        /*
+         * DEFENSA
+         */
+
+        const defenseName =
+            this.querySelector(
+                '#defense-name'
+            ).value.trim();
+
+        const defenseReduction =
+            Number(
+                this.querySelector(
+                    '#defense-reduction'
+                ).value
+            );
+
+
+        /*
+         * ESPECIAL
+         */
+
+        const specialName =
+            this.querySelector(
+                '#special-name'
+            ).value.trim();
+
+        const specialDamage =
+            Number(
+                this.querySelector(
+                    '#special-damage'
+                ).value
+            );
+
+        const specialUnlockTurn =
+            Number(
+                this.querySelector(
+                    '#special-unlock-turn'
+                ).value
+            );
+
+        const specialCooldown =
+            Number(
+                this.querySelector(
+                    '#special-cooldown'
+                ).value
+            );
+
+
+        /*
+         * VALIDACIONES
+         */
+
         if (
             !name ||
             !type ||
             !image ||
-            !description
+            !description ||
+            !defenseName ||
+            !specialName
         ) {
 
             this.showMessage(
@@ -394,16 +1014,175 @@ export class AdminPanel extends HTMLElement {
             return;
         }
 
+
+        if (
+            defenseReduction < 0 ||
+            defenseReduction > 1
+        ) {
+
+            this.showMessage(
+                'La reducción debe estar entre 0 y 1.'
+            );
+
+            return;
+        }
+
+
+        if (
+            specialDamage <= 0 ||
+            specialUnlockTurn <= 0 ||
+            specialCooldown <= 0
+        ) {
+
+            this.showMessage(
+                'Los valores del especial no son válidos.'
+            );
+
+            return;
+        }
+
+
         /*
-         * Verificamos que no exista
-         * otra carta con el mismo nombre.
+         * =====================================================
+         * EDITAR
+         * =====================================================
          */
+
+        if (this.editingCardId) {
+
+            const card =
+                this.cards.find(
+                    (item) =>
+                        item.id ===
+                        this.editingCardId
+                );
+
+            if (!card) {
+                return;
+            }
+
+
+            /*
+             * Evitar nombres duplicados.
+             */
+
+            const duplicated =
+                this.cards.some(
+                    (item) =>
+                        item.id !==
+                        this.editingCardId &&
+                        item.name.toLowerCase() ===
+                        name.toLowerCase()
+                );
+
+
+            if (duplicated) {
+
+                this.showMessage(
+                    'Ya existe otra carta con ese nombre.'
+                );
+
+                return;
+            }
+
+
+            /*
+             * Conservamos los datos
+             * que no se editan.
+             */
+
+            const updatedCard = {
+
+                ...card,
+
+                name,
+
+                type,
+
+                image,
+
+                description,
+
+                attacks,
+
+                defense: {
+
+                    ...card.defense,
+
+                    name:
+                        defenseName,
+
+                    damageReduction:
+                        defenseReduction
+
+                },
+
+                special: {
+
+                    ...card.special,
+
+                    name:
+                        specialName,
+
+                    baseDamage:
+                        specialDamage,
+
+                    unlockTurn:
+                        specialUnlockTurn,
+
+                    cooldown:
+                        specialCooldown
+
+                }
+
+            };
+
+
+            try {
+
+                await updateCard(
+                    updatedCard,
+                    this.editingCardId
+                );
+
+
+                this.editingCardId = null;
+
+                await this.loadCards();
+
+
+                this.showMessage(
+                    '✅ Carta actualizada correctamente.'
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                this.showMessage(
+                    '❌ No se pudo actualizar la carta.'
+                );
+
+            }
+
+            return;
+        }
+
+
+        /*
+         * =====================================================
+         * CREAR
+         * =====================================================
+         */
+
         const exists =
             this.cards.some(
                 (card) =>
                     card.name.toLowerCase() ===
                     name.toLowerCase()
             );
+
 
         if (exists) {
 
@@ -413,6 +1192,7 @@ export class AdminPanel extends HTMLElement {
 
             return;
         }
+
 
         const newCard = {
 
@@ -427,49 +1207,38 @@ export class AdminPanel extends HTMLElement {
 
             description,
 
+            /*
+             * Por ahora el motor utiliza
+             * 250 HP.
+             */
+
             hp: 250,
 
-            attacks: [
-
-                {
-                    id: 'attack-01',
-                    name: 'Ataque 1',
-                    baseDamage: 20
-                },
-
-                {
-                    id: 'attack-02',
-                    name: 'Ataque 2',
-                    baseDamage: 30
-                },
-
-                {
-                    id: 'attack-03',
-                    name: 'Ataque 3',
-                    baseDamage: 40
-                },
-
-                {
-                    id: 'attack-04',
-                    name: 'Ataque 4',
-                    baseDamage: 50
-                }
-
-            ],
+            attacks,
 
             defense: {
 
-                name: 'Defensa',
-                damageReduction: 0.5
+                name:
+                    defenseName,
+
+                damageReduction:
+                    defenseReduction
 
             },
 
             special: {
 
-                name: 'Poder especial',
-                baseDamage: 65,
-                unlockTurn: 2,
-                cooldown: 3
+                name:
+                    specialName,
+
+                baseDamage:
+                    specialDamage,
+
+                unlockTurn:
+                    specialUnlockTurn,
+
+                cooldown:
+                    specialCooldown
 
             },
 
@@ -493,7 +1262,9 @@ export class AdminPanel extends HTMLElement {
 
             createdAt:
                 new Date().toISOString()
+
         };
+
 
         try {
 
@@ -501,110 +1272,32 @@ export class AdminPanel extends HTMLElement {
                 newCard
             );
 
-            this.showMessage(
-                'Carta creada correctamente.'
-            );
 
             await this.loadCards();
+
+
+            this.showMessage(
+                '✅ Carta creada correctamente.'
+            );
+
 
         } catch (error) {
 
             console.error(error);
 
             this.showMessage(
-                'No se pudo crear la carta.'
+                '❌ No se pudo crear la carta.'
             );
+
         }
     }
 
-    async handleEditCard(id) {
 
-        const card =
-            this.cards.find(
-                (item) =>
-                    item.id === id
-            );
-
-        if (!card) {
-            return;
-        }
-
-        const newName =
-            prompt(
-                'Nuevo nombre:',
-                card.name
-            );
-
-        if (
-            newName === null
-        ) {
-            return;
-        }
-
-        const newType =
-            prompt(
-                'Nuevo tipo:',
-                card.type
-            );
-
-        if (
-            newType === null
-        ) {
-            return;
-        }
-
-        const newDescription =
-            prompt(
-                'Nueva descripción:',
-                card.description
-            );
-
-        if (
-            newDescription === null
-        ) {
-            return;
-        }
-
-        /*
-         * PUT reemplaza la carta
-         * completa.
-         */
-        const updatedCard = {
-
-            ...card,
-
-            name:
-                newName.trim(),
-
-            type:
-                newType.trim(),
-
-            description:
-                newDescription.trim()
-        };
-
-        try {
-
-            await updateCard(
-                updatedCard,
-                id
-            );
-
-            this.showMessage(
-                'Carta actualizada correctamente con PUT.'
-            );
-
-            await this.loadCards();
-
-        } catch (error) {
-
-            console.error(error);
-
-            this.showMessage(
-                'No se pudo actualizar la carta.'
-            );
-        }
-    }
+    /*
+     * =====================================================
+     * ACTIVAR / DESACTIVAR
+     * =====================================================
+     */
 
     async handleToggleCard(id) {
 
@@ -618,12 +1311,9 @@ export class AdminPanel extends HTMLElement {
             return;
         }
 
+
         try {
 
-            /*
-             * PATCH solamente modifica
-             * el campo active.
-             */
             await patchCard(
                 {
                     active:
@@ -632,21 +1322,32 @@ export class AdminPanel extends HTMLElement {
                 id
             );
 
-            this.showMessage(
-                'Estado de la carta actualizado con PATCH.'
-            );
 
             await this.loadCards();
+
+
+            this.showMessage(
+                '✅ Estado de la carta actualizado.'
+            );
+
 
         } catch (error) {
 
             console.error(error);
 
             this.showMessage(
-                'No se pudo cambiar el estado.'
+                '❌ No se pudo cambiar el estado.'
             );
+
         }
     }
+
+
+    /*
+     * =====================================================
+     * ELIMINAR
+     * =====================================================
+     */
 
     async handleDeleteCard(id) {
 
@@ -660,14 +1361,17 @@ export class AdminPanel extends HTMLElement {
             return;
         }
 
+
         const confirmed =
             confirm(
                 `¿Seguro que deseas eliminar "${card.name}"?`
             );
 
+
         if (!confirmed) {
             return;
         }
+
 
         try {
 
@@ -675,21 +1379,32 @@ export class AdminPanel extends HTMLElement {
                 id
             );
 
-            this.showMessage(
-                'Carta eliminada correctamente.'
-            );
 
             await this.loadCards();
+
+
+            this.showMessage(
+                '✅ Carta eliminada correctamente.'
+            );
+
 
         } catch (error) {
 
             console.error(error);
 
             this.showMessage(
-                'No se pudo eliminar la carta.'
+                '❌ No se pudo eliminar la carta.'
             );
+
         }
     }
+
+
+    /*
+     * =====================================================
+     * MENSAJES
+     * =====================================================
+     */
 
     showMessage(message) {
 
@@ -702,21 +1417,32 @@ export class AdminPanel extends HTMLElement {
             return;
         }
 
+
         element.textContent =
             message;
+
 
         setTimeout(
             () => {
 
                 if (element) {
+
                     element.textContent =
                         '';
+
                 }
 
             },
             3000
         );
     }
+
+
+    /*
+     * =====================================================
+     * ERROR
+     * =====================================================
+     */
 
     showError(message) {
 
@@ -750,6 +1476,7 @@ export class AdminPanel extends HTMLElement {
             </section>
         `;
 
+
         this.querySelector(
             '#retry-admin'
         ).addEventListener(
@@ -757,10 +1484,12 @@ export class AdminPanel extends HTMLElement {
             () => {
 
                 this.loadCards();
+
             }
         );
     }
 }
+
 
 customElements.define(
     'admin-panel',

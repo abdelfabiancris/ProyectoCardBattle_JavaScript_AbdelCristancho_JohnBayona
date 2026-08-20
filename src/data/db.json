@@ -123,6 +123,51 @@
       "losses": 0,
       "gamesPlayed": 0,
       "createdAt": "2026-08-19T23:47:17.392Z"
+    },
+    {
+      "id": "player-1787185934958",
+      "nickname": "er",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-20T00:32:14.958Z"
+    },
+    {
+      "id": "player-1787186709805",
+      "nickname": "t",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-20T00:45:09.805Z"
+    },
+    {
+      "id": "player-1787190056228",
+      "nickname": "ee",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-20T01:40:56.228Z"
+    },
+    {
+      "id": "player-1787193883540",
+      "nickname": "SSS",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-20T02:44:43.540Z"
+    },
+    {
+      "id": "player-1787195964404",
+      "nickname": "i",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-20T03:19:24.404Z"
     }
   ],
   "cards": [

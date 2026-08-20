@@ -194,46 +194,58 @@ export class BattleEngine {
      * Si está defendiendo,
      * recibe solamente el 50%.
      */
+
     applyDamage(
-        target,
-        damage
-    ) {
+    target,
+    damage
+) {
 
-        let finalDamage =
-            damage;
+    let finalDamage =
+        damage;
 
-        if (target.isDefending) {
+    if (target.isDefending) {
 
-            finalDamage =
-                Math.round(
-                    damage * 0.5
-                );
+        /*
+         * Utilizamos la reducción configurada
+         * en la carta.
+         *
+         * Si por alguna razón la carta no tiene
+         * damageReduction, utilizamos 50%.
+         */
+        const damageReduction =
+            target.defense?.damageReduction ?? 0.5;
 
-            /*
-             * La defensa solo protege
-             * contra el siguiente ataque.
-             */
-            target.isDefending =
-                false;
-        }
-
-        target.currentHp =
-            Math.max(
-                0,
-                target.currentHp -
-                finalDamage
+        finalDamage =
+            Math.round(
+                damage *
+                (1 - damageReduction)
             );
 
-        if (
-            target.currentHp === 0
-        ) {
-
-            target.defeated =
-                true;
-        }
-
-        return finalDamage;
+        /*
+         * La defensa solo protege
+         * contra el siguiente ataque.
+         */
+        target.isDefending =
+            false;
     }
+
+    target.currentHp =
+        Math.max(
+            0,
+            target.currentHp -
+            finalDamage
+        );
+
+    if (
+        target.currentHp === 0
+    ) {
+
+        target.defeated =
+            true;
+    }
+
+    return finalDamage;
+}
 
     /*
      * Ejecuta una acción del jugador
@@ -488,7 +500,7 @@ export class BattleEngine {
                 `${card.name} se está defendiendo.`,
 
             damageReduction:
-                0.5
+                card.defense?.damageReduction ?? 0.5
         };
     }
 
