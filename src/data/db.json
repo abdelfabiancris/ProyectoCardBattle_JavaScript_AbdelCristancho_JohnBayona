@@ -168,6 +168,15 @@
       "losses": 0,
       "gamesPlayed": 0,
       "createdAt": "2026-08-20T03:19:24.404Z"
+    },
+    {
+      "id": "player-1787276545616",
+      "nickname": "ppp",
+      "points": 50,
+      "wins": 1,
+      "losses": 0,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-21T01:42:25.616Z"
     }
   ],
   "cards": [
@@ -1293,6 +1302,29 @@
       ],
       "startedAt": "2026-08-19T03:45:16.245Z",
       "endedAt": "2026-08-19T03:47:24.580Z"
+    },
+    {
+      "id": "battle-1787276673026",
+      "playerId": "player-1787276545616",
+      "playerNickname": "ppp",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-012",
+        "card-013",
+        "card-014",
+        "card-015",
+        "card-011"
+      ],
+      "machineDeck": [
+        "card-003",
+        "card-002",
+        "card-020",
+        "card-006",
+        "card-004"
+      ],
+      "startedAt": "2026-08-21T01:42:44.706Z",
+      "endedAt": "2026-08-21T01:44:33.026Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
