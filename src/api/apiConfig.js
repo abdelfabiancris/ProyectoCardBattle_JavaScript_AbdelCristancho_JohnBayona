@@ -1,14 +1,15 @@
-let API_URL;
+const mode =
+    import.meta.env.VITE_API_MODE || 'development';
 
-switch (import.meta.env.VITE_API_MODE) {
-    case 'production':
-        API_URL = import.meta.env.VITE_API_PROD_URL;
-        break;
+const DEV_URL =
+    import.meta.env.VITE_API_DEV_URL ||
+    'http://localhost:3000';
 
-    case 'development':
-    default:
-        API_URL = import.meta.env.VITE_API_DEV_URL;
-        break;
-}
+const PROD_URL =
+    import.meta.env.VITE_API_PROD_URL ||
+    'https://proyectocardbattlejavascriptabdelcristanchojo-production.up.railway.app';
 
-export { API_URL };
+export const API_URL =
+    mode === 'production'
+        ? PROD_URL
+        : DEV_URL;
