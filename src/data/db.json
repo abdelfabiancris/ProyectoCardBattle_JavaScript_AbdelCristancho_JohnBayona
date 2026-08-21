@@ -73,10 +73,10 @@
     {
       "id": "bps-Gig6hFE",
       "nickname": "aas",
-      "points": 0,
-      "wins": 0,
+      "points": 50,
+      "wins": 1,
       "losses": 0,
-      "gamesPlayed": 0,
+      "gamesPlayed": 1,
       "createdAt": "2026-08-19T03:37:02.845Z"
     },
     {
@@ -1325,6 +1325,29 @@
       ],
       "startedAt": "2026-08-21T01:42:44.706Z",
       "endedAt": "2026-08-21T01:44:33.026Z"
+    },
+    {
+      "id": "battle-1787286786833",
+      "playerId": "bps-Gig6hFE",
+      "playerNickname": "aas",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-005",
+        "card-006",
+        "card-003",
+        "card-004",
+        "card-001"
+      ],
+      "machineDeck": [
+        "card-018",
+        "card-019",
+        "card-014",
+        "card-013",
+        "card-009"
+      ],
+      "startedAt": "2026-08-21T04:31:39.152Z",
+      "endedAt": "2026-08-21T04:33:06.833Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

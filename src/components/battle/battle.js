@@ -142,15 +142,15 @@ export class BattleComponent extends HTMLElement {
                         class="
                             turn-indicator
                             ${state.turn === 'player'
-                                ? 'player-turn'
-                                : 'machine-turn'
-                            }
+                ? 'player-turn'
+                : 'machine-turn'
+            }
                         "
                     >
                         ${state.turn === 'player'
-                            ? '🎮 Tu turno'
-                            : '🤖 Turno de la máquina'
-                        }
+                ? '🎮 Tu turno'
+                : '🤖 Turno de la máquina'
+            }
                     </div>
 
                     <div class="round-indicator">
@@ -162,48 +162,47 @@ export class BattleComponent extends HTMLElement {
                 <main class="battle-arena">
 
                     ${this.renderCard(
-                        playerCard,
-                        'user',
-                        this.previousPlayerHp
-                    )}
+                playerCard,
+                'user',
+                this.previousPlayerHp
+            )}
 
                     <div class="vs">
                         VS
                     </div>
 
                     ${this.renderCard(
-                        machineCard,
-                        'machine',
-                        this.previousMachineHp
-                    )}
+                machineCard,
+                'machine',
+                this.previousMachineHp
+            )}
 
                 </main>
 
-                ${
-                    state.turn === 'player'
-                        ? this.renderControls(
-                            playerCard
-                        )
-                        : `
-                            <div
-                                class="
-                                    battle-controls
-                                    machine-thinking
-                                "
-                            >
+                ${state.turn === 'player'
+                ? this.renderControls(
+                    playerCard
+                )
+                : `
+                        <div
+                            class="
+                                battle-controls
+                                machine-thinking
+                            "
+                        >
 
-                                <h3>
-                                    🤖 La máquina
-                                    está pensando...
-                                </h3>
+                            <h3>
+                                🤖 La máquina
+                                está pensando...
+                            </h3>
 
-                                <div class="thinking-dots">
-                                    ● ● ●
-                                </div>
-
+                            <div class="thinking-dots">
+                                ● ● ●
                             </div>
-                        `
-                }
+
+                        </div>
+                    `
+            }
 
                 ${this.renderLog()}
 
@@ -274,32 +273,30 @@ export class BattleComponent extends HTMLElement {
                     class="
                         player-label
                         ${owner === 'user'
-                            ? 'user'
-                            : 'machine'
-                        }
+                ? 'user'
+                : 'machine'
+            }
                     "
                 >
-                    ${
-                        owner === 'user'
-                            ? `🎮 ${
-                                this.player?.nickname
-                                || 'Jugador'
-                            }`
-                            : '🤖 Máquina'
-                    }
+                    ${owner === 'user'
+                ? `🎮 ${this.player?.nickname
+                || 'Jugador'
+                }`
+                : '🤖 Máquina'
+            }
                 </div>
 
                 <article
                     class="
                         battle-card
                         ${card.isDefending
-                            ? 'defending'
-                            : ''
-                        }
+                ? 'defending'
+                : ''
+            }
                         ${card.defeated
-                            ? 'defeated'
-                            : ''
-                        }
+                ? 'defeated'
+                : ''
+            }
                     "
                 >
 
@@ -357,33 +354,31 @@ export class BattleComponent extends HTMLElement {
 
                         <div class="card-status">
 
-                            ${
-                                card.isDefending
-                                    ? `
-                                        <span
-                                            class="
-                                                defending-status
-                                            "
-                                        >
-                                            🛡️ Defendiendo
-                                        </span>
-                                    `
-                                    : ''
-                            }
+                            ${card.isDefending
+                ? `
+                                    <span
+                                        class="
+                                            defending-status
+                                        "
+                                    >
+                                        🛡️ Defendiendo
+                                    </span>
+                                `
+                : ''
+            }
 
-                            ${
-                                card.defeated
-                                    ? `
-                                        <span
-                                            class="
-                                                defeated-status
-                                            "
-                                        >
-                                            💀 Derrotada
-                                        </span>
-                                    `
-                                    : ''
-                            }
+                            ${card.defeated
+                ? `
+                                    <span
+                                        class="
+                                            defeated-status
+                                        "
+                                    >
+                                        💀 Derrotada
+                                    </span>
+                                `
+                : ''
+            }
 
                         </div>
 
@@ -420,34 +415,33 @@ export class BattleComponent extends HTMLElement {
 
                 <div class="attack-buttons">
 
-                    ${
-                        card.attacks
-                            .map(
-                                (
-                                    attack,
-                                    index
-                                ) => `
-                                    <button
-                                        class="
-                                            battle-button
-                                            attack-button
-                                        "
-                                        data-action="attack-${index + 1}"
-                                    >
+                    ${card.attacks
+                .map(
+                    (
+                        attack,
+                        index
+                    ) => `
+                                <button
+                                    class="
+                                        battle-button
+                                        attack-button
+                                    "
+                                    data-action="attack-${index + 1}"
+                                >
 
-                                        ⚔️
-                                        ${attack.name}
+                                    ⚔️
+                                    ${attack.name}
 
-                                        <small>
-                                            ${attack.baseDamage}
-                                            daño base
-                                        </small>
+                                    <small>
+                                        ${attack.baseDamage}
+                                        daño base
+                                    </small>
 
-                                    </button>
-                                `
-                            )
-                            .join('')
-                    }
+                                </button>
+                            `
+                )
+                .join('')
+            }
 
                 </div>
 
@@ -473,16 +467,15 @@ export class BattleComponent extends HTMLElement {
                         battle-button
                         special-button
                         ${specialAvailable
-                            ? 'available'
-                            : 'locked'
-                        }
+                ? 'available'
+                : 'locked'
+            }
                     "
                     data-action="special"
-                    ${
-                        specialAvailable
-                            ? ''
-                            : 'disabled'
-                    }
+                    ${specialAvailable
+                ? ''
+                : 'disabled'
+            }
                 >
 
                     ⚡
@@ -490,13 +483,12 @@ export class BattleComponent extends HTMLElement {
 
                     <small>
 
-                        ${
-                            specialAvailable
-                                ? 'PODER DISPONIBLE'
-                                : cooldown > 0
-                                    ? `Cooldown: ${cooldown}`
-                                    : `Disponible desde tu turno ${unlockTurn}`
-                        }
+                        ${specialAvailable
+                ? 'PODER DISPONIBLE'
+                : cooldown > 0
+                    ? `Cooldown: ${cooldown}`
+                    : `Disponible desde tu turno ${unlockTurn}`
+            }
 
                     </small>
 
@@ -515,26 +507,25 @@ export class BattleComponent extends HTMLElement {
                     📜 Registro de combate
                 </h3>
 
-                ${
-                    this.logs.length
-                        ? this.logs
-                            .map(
-                                (log) => `
-                                    <div
-                                        class="log-entry"
-                                    >
-                                        ${log}
-                                    </div>
-                                `
-                            )
-                            .join('')
-                        : `
-                            <div class="log-entry">
-                                La batalla está
-                                por comenzar...
-                            </div>
-                        `
-                }
+                ${this.logs.length
+                ? this.logs
+                    .map(
+                        (log) => `
+                                <div
+                                    class="log-entry"
+                                >
+                                    ${log}
+                                </div>
+                            `
+                    )
+                    .join('')
+                : `
+                        <div class="log-entry">
+                            La batalla está
+                            por comenzar...
+                        </div>
+                    `
+            }
 
             </section>
         `;
@@ -610,6 +601,16 @@ export class BattleComponent extends HTMLElement {
         this.playSoundForAction(
             result
         );
+
+        /*
+         * Guardamos los HP antes de
+         * actualizar la interfaz.
+         */
+        const previousPlayerHp =
+            this.previousPlayerHp;
+
+        const previousMachineHp =
+            this.previousMachineHp;
 
         /*
          * Actualizamos el estado visual.
@@ -713,6 +714,14 @@ export class BattleComponent extends HTMLElement {
             return;
         }
 
+        /*
+         * Guardamos el HP del jugador
+         * ANTES de recibir el ataque.
+         */
+        const previousPlayerHp =
+            this.engine.getState()
+                .playerCard.currentHp;
+
         const result =
             this.engine.machineTurn();
 
@@ -720,37 +729,75 @@ export class BattleComponent extends HTMLElement {
             return;
         }
 
-        this.addResultToLog(
-            result
-        );
+        this.addResultToLog(result);
 
-        this.playSoundForAction(
-            result
-        );
+        this.playSoundForAction(result);
 
         /*
-         * Renderizamos primero.
+         * Primero actualizamos el HTML.
+         * Así las cartas existen en el DOM
+         * antes de ejecutar las animaciones.
          */
         this.render();
         this.configureEvents();
 
         /*
-         * Animamos la barra.
+         * Si la máquina atacó,
+         * animamos el golpe y la barra.
          */
-        this.animateHealthBars();
+        if (
+            result.type === 'attack' ||
+            result.type === 'special'
+        ) {
 
-        /*
-         * Animamos la acción.
-         */
-        this.playActionAnimation(
-            result.type,
-            'machine'
-        );
+            const newPlayerHp =
+                this.engine.getState()
+                    .playerCard.currentHp;
 
-        /*
-         * Guardamos los nuevos HP.
-         */
-        this.updatePreviousHp();
+            /*
+             * Animación de ataque y daño.
+             */
+            this.playActionAnimation(
+                result.type,
+                'machine'
+            );
+
+            /*
+             * Animación de la barra de vida.
+             *
+             * Esperamos 250 ms para sincronizar
+             * la barra con el impacto de la carta.
+             */
+            setTimeout(
+                () => {
+
+                    this.animateHealthBar(
+                        'user',
+                        previousPlayerHp,
+                        newPlayerHp
+                    );
+
+                },
+                250
+            );
+
+            /*
+             * Guardamos el nuevo HP.
+             */
+            this.previousPlayerHp =
+                newPlayerHp;
+
+        } else {
+
+            /*
+             * Si la máquina utilizó defensa,
+             * solamente ejecutamos su animación.
+             */
+            this.playActionAnimation(
+                result.type,
+                'machine'
+            );
+        }
 
         /*
          * Si terminó la partida.
@@ -761,40 +808,25 @@ export class BattleComponent extends HTMLElement {
                 () => {
                     this.showResult();
                 },
-                800
+                900
             );
 
             return;
         }
 
         /*
-         * Si derrotó una carta.
+         * Si la máquina no terminó
+         * la batalla, actualizamos el
+         * HP anterior de su carta.
          */
-        if (result.defeated) {
+        const state =
+            this.engine.getState();
 
-            setTimeout(
-                () => {
+        if (state.machineCard) {
 
-                    this.configureEvents();
-
-                },
-                800
-            );
-
-            return;
+            this.previousMachineHp =
+                state.machineCard.currentHp;
         }
-
-        /*
-         * El turno vuelve al jugador.
-         */
-        this.render();
-        this.configureEvents();
-
-        /*
-         * Actualizamos las referencias
-         * de HP después del render.
-         */
-        this.updatePreviousHp();
     }
 
     /*
@@ -823,12 +855,6 @@ export class BattleComponent extends HTMLElement {
             const currentWidth =
                 playerBar.dataset.currentWidth;
 
-            /*
-             * requestAnimationFrame permite que
-             * el navegador primero muestre el
-             * ancho anterior y después cambie
-             * al nuevo ancho.
-             */
             requestAnimationFrame(
                 () => {
 
@@ -1212,6 +1238,92 @@ export class BattleComponent extends HTMLElement {
 
     /*
      * ========================================
+     * ANIMAR BARRA DE VIDA INDIVIDUAL
+     * ========================================
+     */
+
+    animateHealthBar(
+        defenderOwner,
+        previousHp,
+        newHp
+    ) {
+
+        if (
+            previousHp === undefined ||
+            previousHp === null ||
+            newHp === undefined ||
+            newHp === null ||
+            previousHp === newHp
+        ) {
+            return;
+        }
+
+        const selector =
+            defenderOwner === 'user'
+                ? '.battle-player:first-child .hp-fill'
+                : '.battle-player:last-child .hp-fill';
+
+        const hpBar =
+            this.querySelector(selector);
+
+        if (!hpBar) {
+            return;
+        }
+
+        const previousPercentage =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    (previousHp / 250) * 100
+                )
+            );
+
+        const newPercentage =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    (newHp / 250) * 100
+                )
+            );
+
+        /*
+         * Colocamos la barra en el
+         * valor anterior.
+         */
+        hpBar.style.transition =
+            'none';
+
+        hpBar.style.width =
+            `${previousPercentage}%`;
+
+        /*
+         * Obligamos al navegador a
+         * aplicar primero el estado anterior.
+         */
+        void hpBar.offsetWidth;
+
+        /*
+         * Activamos la transición.
+         */
+        hpBar.style.transition =
+            'width 1.2s ease-out';
+
+        /*
+         * Cambiamos al nuevo HP.
+         */
+        requestAnimationFrame(
+            () => {
+
+                hpBar.style.width =
+                    `${newPercentage}%`;
+            }
+        );
+    }
+
+    /*
+     * ========================================
      * ANIMACIÓN CARTA DERROTADA
      * ========================================
      */
@@ -1291,9 +1403,9 @@ export class BattleComponent extends HTMLElement {
                 class="
                     battle-result
                     ${won
-                        ? 'victory'
-                        : 'defeat'
-                    }
+                ? 'victory'
+                : 'defeat'
+            }
                 "
             >
 
@@ -1301,23 +1413,21 @@ export class BattleComponent extends HTMLElement {
 
                     <h2>
                         ${won
-                            ? '🏆 ¡VICTORIA!'
-                            : '💀 DERROTA'
-                        }
+                ? '🏆 ¡VICTORIA!'
+                : '💀 DERROTA'
+            }
                     </h2>
 
                     <p>
-                        ${
-                            won
-                                ? `¡Felicidades ${
-                                    this.player?.nickname
-                                    || 'Jugador'
-                                }!`
-                                : `
-                                    La máquina ganó
-                                    esta batalla.
-                                `
-                        }
+                        ${won
+                ? `¡Felicidades ${this.player?.nickname
+                || 'Jugador'
+                }!`
+                : `
+                                La máquina ganó
+                                esta batalla.
+                            `
+            }
                     </p>
 
                     <p>
