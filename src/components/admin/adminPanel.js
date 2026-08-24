@@ -28,7 +28,7 @@ export class AdminPanel extends HTMLElement {
                 <div class="admin-container">
 
                     <h1>
-                        👑 Panel de administración
+                        Panel de administración
                     </h1>
 
                     <p>
@@ -71,7 +71,7 @@ export class AdminPanel extends HTMLElement {
                         <div>
 
                             <h1>
-                                👑 Administración
+                                Administración
                             </h1>
 
                             <p>

@@ -11,23 +11,31 @@
    ========================================================= */
 
 .auth-section {
+    width: 100%;
+    min-width: 100%;
     min-height: 100vh;
 
+    box-sizing: border-box;
+
     display: flex;
-
     justify-content: center;
-
     align-items: center;
 
     padding: 20px;
 
     background:
-        radial-gradient(circle at top,
-            #382020 0%,
-            #181818 45%,
-            #090909 100%);
+        radial-gradient(circle at 50% 0%,
+            rgba(91, 192, 235, .22),
+            transparent 35%),
+        linear-gradient(145deg,
+            #061826 0%,
+            #0b3954 48%,
+            #062331 100%);
 
-    color: #ffffff;
+    color: #eafcff;
+
+    position: relative;
+    overflow: hidden;
 }
 
 /* =========================================================
@@ -726,4 +734,41 @@
 
 .register-message.success {
     color: #8fe1d0;
+}
+
+/* =========================================================
+   CONTENEDOR DEL REGISTRO DE JUGADOR
+   ========================================================= */
+
+player-register {
+    display: block;
+    width: 100%;
+    min-width: 100%;
+}
+
+/* =========================================================
+   FONDO GENERAL - REGISTRO DE JUGADORES
+   ========================================================= */
+
+.main-menu {
+    width: 100%;
+    min-width: 100%;
+    min-height: 100vh;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    background:
+        radial-gradient(circle at 50% 0%,
+            rgba(91, 192, 235, 0.22),
+            transparent 35%),
+        linear-gradient(145deg,
+            #061826 0%,
+            #0b3954 48%,
+            #062331 100%);
 }

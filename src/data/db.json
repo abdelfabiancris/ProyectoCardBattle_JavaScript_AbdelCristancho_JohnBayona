@@ -109,10 +109,10 @@
     {
       "id": "raSCv97J12w",
       "nickname": "q",
-      "points": 0,
-      "wins": 0,
+      "points": 50,
+      "wins": 1,
       "losses": 0,
-      "gamesPlayed": 0,
+      "gamesPlayed": 1,
       "createdAt": "2026-08-19T23:43:57.570Z"
     },
     {
@@ -1440,6 +1440,29 @@
       ],
       "startedAt": "2026-08-24T04:35:41.936Z",
       "endedAt": "2026-08-24T04:37:00.105Z"
+    },
+    {
+      "id": "battle-1787550344819",
+      "playerId": "raSCv97J12w",
+      "playerNickname": "q",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-003",
+        "card-005",
+        "card-004"
+      ],
+      "machineDeck": [
+        "card-007",
+        "card-012",
+        "card-006",
+        "card-016",
+        "card-020"
+      ],
+      "startedAt": "2026-08-24T05:44:54.130Z",
+      "endedAt": "2026-08-24T05:45:44.819Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

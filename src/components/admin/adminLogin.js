@@ -19,7 +19,7 @@ export class AdminLogin extends HTMLElement {
                 <div class="admin-login-card">
 
                     <h1>
-                        🔐 Administración
+                        Administración
                     </h1>
 
                     <p>
