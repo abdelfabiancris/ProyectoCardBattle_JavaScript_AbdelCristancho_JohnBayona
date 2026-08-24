@@ -1,39 +1,111 @@
 /* =========================================================
-   DECK SELECTOR - CARD BATTLE ARENA
-   ========================================================= */
-
-* {
-    box-sizing: border-box;
-}
-
-/* =========================================================
-   SECCIÓN PRINCIPAL
+   AVATAR — TEMPLO DEL AIRE
+   Selección de cartas / mazo
    ========================================================= */
 
 .deck-section {
     min-height: 100vh;
-
-    padding: 35px 20px;
+    padding: 30px 20px;
 
     background:
-        radial-gradient(circle at top,
-            #382020 0%,
-            #181818 45%,
-            #090909 100%);
+        radial-gradient(circle at 50% 0%,
+            rgba(91, 192, 235, 0.14),
+            transparent 38%),
+        radial-gradient(circle at 15% 80%,
+            rgba(255, 255, 255, 0.16),
+            transparent 30%),
+        linear-gradient(135deg,
+            #d8dddd 0%,
+            #c1ccce 35%,
+            #a9b9bc 68%,
+            #aaa48f 100%);
 
-    color: #ffffff;
+    color: #354b52;
+
+    position: relative;
+    overflow: hidden;
 }
+
+
+/* =========================================================
+   DECORACIÓN DEL TEMPLO DEL AIRE
+   ========================================================= */
+
+.deck-section::before {
+    content: "";
+
+    position: absolute;
+
+    width: 520px;
+    height: 520px;
+
+    top: -260px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    border:
+        3px solid rgba(255, 255, 255, 0.3);
+
+    box-shadow:
+        0 0 0 35px rgba(91, 192, 235, 0.12),
+
+        0 0 0 70px rgba(91, 192, 235, 0.07),
+
+        0 0 0 105px rgba(255, 255, 255, 0.04);
+
+    pointer-events: none;
+}
+
+
+/* Líneas decorativas */
+
+.deck-section::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.18;
+
+    background-image:
+        linear-gradient(90deg,
+            transparent 48%,
+            rgba(255, 255, 255, 0.65) 49%,
+            rgba(255, 255, 255, 0.65) 51%,
+            transparent 52%);
+
+    background-size: 180px 180px;
+
+    mask-image:
+        linear-gradient(to bottom,
+            transparent,
+            black 25%,
+            black 75%,
+            transparent);
+}
+
 
 /* =========================================================
    CONTENEDOR
    ========================================================= */
 
 .deck-container {
-    width: min(1250px,
+    position: relative;
+
+    z-index: 1;
+
+    width: min(1200px,
             100%);
 
     margin: 0 auto;
 }
+
 
 /* =========================================================
    HEADER
@@ -42,228 +114,88 @@
 .deck-header {
     text-align: center;
 
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
 .deck-header h1 {
-    margin: 0 0 10px;
+    margin-bottom: 10px;
 
-    color: #f0c75e;
+    color: #28566b;
 
-    font-size: clamp(2rem,
+    font-size:
+        clamp(2rem,
             5vw,
-            2.8rem);
+            3rem);
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
 
     text-shadow:
-        0 0 15px rgba(240, 199, 94, 0.3);
+        0 2px 0 #eafcff,
+        0 4px 8px rgba(47, 72, 88, 0.25);
 }
 
 .deck-header p {
-    margin: 0;
+    color: #315d70;
 
-    color: #aaaaaa;
-
-    font-size: 1rem;
+    font-weight: 600;
 }
 
+
 /* =========================================================
-   CONTADOR
+   CONTADOR DE CARTAS
    ========================================================= */
 
 .selection-counter {
     display: inline-block;
 
-    margin-top: 18px;
+    margin-top: 15px;
 
     padding: 10px 22px;
 
-    border: 1px solid #8f6b2f;
-
-    border-radius: 25px;
-
-    background:
-        linear-gradient(135deg,
-            #292929,
-            #151515);
-
-    color: #f0c75e;
-
-    font-weight: bold;
-
-    box-shadow:
-        0 0 15px rgba(240, 199, 94, 0.08);
-}
-
-/* =========================================================
-   MAZO SELECCIONADO
-   ========================================================= */
-
-.selected-deck {
-    margin-bottom: 35px;
-
-    padding: 25px;
-
-    background:
-        linear-gradient(145deg,
-            #292929,
-            #111111);
-
-    border: 1px solid #555555;
-
     border-radius: 20px;
 
+    background:
+        linear-gradient(135deg,
+            #168aad,
+            #0b607d);
+
+    border:
+        2px solid #5bc0eb;
+
+    color: #effcff;
+
+    font-weight: 800;
+
     box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.5);
+        0 6px 18px rgba(47, 72, 88, 0.3),
+
+        0 0 15px rgba(91, 192, 235, 0.2);
 }
 
-.selected-deck h2 {
-    margin-top: 0;
+.selection-counter::before,
+.selection-counter::after {
+    content: "";
 
-    margin-bottom: 8px;
+    position: absolute;
 
-    color: #f0c75e;
+    top: 50%;
+
+    width: 18px;
+    height: 2px;
+
+    background: #5bc0eb;
 }
 
-.selected-deck>p {
-    margin-top: 0;
-
-    color: #999999;
+.selection-counter::before {
+    right: 100%;
 }
 
-/* =========================================================
-   LISTA DE CARTAS SELECCIONADAS
-   ========================================================= */
-
-.selected-cards-list {
-    display: grid;
-
-    gap: 10px;
-
-    margin-top: 20px;
+.selection-counter::after {
+    left: 100%;
 }
 
-.selected-card {
-    display: flex;
-
-    align-items: center;
-
-    gap: 14px;
-
-    padding: 10px 14px;
-
-    background:
-        linear-gradient(135deg,
-            #222222,
-            #151515);
-
-    border: 1px solid #444444;
-
-    border-radius: 12px;
-
-    transition:
-        border-color 0.2s ease,
-        transform 0.2s ease;
-}
-
-.selected-card:hover {
-    border-color: #8f6b2f;
-
-    transform: translateX(3px);
-}
-
-.selected-card img {
-    width: 55px;
-
-    height: 55px;
-
-    object-fit: cover;
-
-    border-radius: 8px;
-
-    border: 1px solid #555555;
-}
-
-.selected-card strong {
-    color: #ffffff;
-}
-
-/* =========================================================
-   POSICIÓN
-   ========================================================= */
-
-.card-position {
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    min-width: 32px;
-
-    height: 32px;
-
-    border: 1px solid #c79d35;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(135deg,
-            #f0c75e,
-            #bd8f29);
-
-    color: #211b0c;
-
-    font-weight: bold;
-}
-
-/* =========================================================
-   BOTONES DE POSICIÓN
-   ========================================================= */
-
-.position-buttons {
-    display: flex;
-
-    gap: 6px;
-
-    margin-left: auto;
-}
-
-.position-buttons button {
-    width: 36px;
-
-    height: 36px;
-
-    border: 1px solid #555555;
-
-    border-radius: 8px;
-
-    background: #242424;
-
-    color: #f0c75e;
-
-    cursor: pointer;
-
-    font-weight: bold;
-
-    transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
-}
-
-.position-buttons button:hover:not(:disabled) {
-    background: #333333;
-
-    border-color: #f0c75e;
-
-    transform: translateY(-2px);
-}
-
-.position-buttons button:disabled {
-    opacity: 0.3;
-
-    cursor: not-allowed;
-}
 
 /* =========================================================
    GRID DE CARTAS
@@ -274,10 +206,12 @@
 
     grid-template-columns:
         repeat(auto-fill,
-            minmax(230px, 1fr));
+            minmax(220px,
+                1fr));
 
     gap: 25px;
 }
+
 
 /* =========================================================
    CARTA
@@ -290,15 +224,18 @@
 
     background:
         linear-gradient(145deg,
-            #292929,
-            #111111);
+            #e8d3a3,
+            #c9aa70);
 
-    border: 1px solid #444444;
+    border:
+        3px solid #a47b3c;
 
-    border-radius: 18px;
+    border-radius: 14px;
 
     box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.5);
+        0 10px 25px rgba(47, 72, 88, 0.28),
+
+        inset 0 0 0 2px rgba(255, 244, 210, 0.35);
 
     transition:
         transform 0.25s ease,
@@ -306,55 +243,101 @@
         border-color 0.25s ease;
 }
 
-.deck-card:hover {
-    transform: translateY(-7px);
 
-    border-color: #8f6b2f;
+/* Detalle decorativo */
+
+.deck-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 8px;
+    left: 8px;
+
+    width: 18px;
+    height: 18px;
+
+    border-top:
+        3px solid #5bc0eb;
+
+    border-left:
+        3px solid #5bc0eb;
+
+    opacity: 0.8;
+
+    z-index: 2;
+
+    pointer-events: none;
+}
+
+
+/* Detalle inferior */
+
+.deck-card::after {
+    content: "";
+
+    position: absolute;
+
+    right: 8px;
+    bottom: 8px;
+
+    width: 18px;
+    height: 18px;
+
+    border-right:
+        3px solid #d9a441;
+
+    border-bottom:
+        3px solid #d9a441;
+
+    opacity: 0.7;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+.deck-card:hover {
+    transform:
+        translateY(-8px) rotate(-0.5deg);
+
+    border-color:
+        #5bc0eb;
 
     box-shadow:
-        0 18px 35px rgba(0, 0, 0, 0.6),
+        0 18px 35px rgba(47, 72, 88, 0.32),
 
-        0 0 20px rgba(240, 199, 94, 0.08);
+        0 0 25px rgba(91, 192, 235, 0.28);
 }
+
 
 /* =========================================================
    CARTA SELECCIONADA
    ========================================================= */
 
 .deck-card.selected {
-    border: 2px solid #f0c75e;
+    outline:
+        4px solid #5bc0eb;
 
-    transform: translateY(-7px);
+    outline-offset: 3px;
+
+    transform:
+        translateY(-8px);
+
+    border-color:
+        #168aad;
 
     box-shadow:
-        0 18px 35px rgba(0, 0, 0, 0.6),
+        0 0 0 8px rgba(91, 192, 235, 0.18),
 
-        0 0 25px rgba(240, 199, 94, 0.2);
+        0 18px 35px rgba(47, 72, 88, 0.35),
+
+        0 0 25px rgba(91, 192, 235, 0.3);
 }
 
-.deck-card.selected::before {
-    content: "✓ SELECCIONADA";
-
-    position: absolute;
-
-    top: 12px;
-
-    right: 12px;
-
-    z-index: 2;
-
-    padding: 6px 10px;
-
-    border-radius: 15px;
-
-    background: #f0c75e;
-
-    color: #211b0c;
-
-    font-size: 0.7rem;
-
-    font-weight: bold;
-}
 
 /* =========================================================
    IMAGEN DE CARTA
@@ -365,46 +348,31 @@
 
     width: 100%;
 
-    height: 270px;
+    height: 250px;
 
     object-fit: cover;
 
-    border-bottom: 1px solid #444444;
-
-    transition:
-        transform 0.4s ease,
-        filter 0.3s ease;
+    border-bottom:
+        3px solid #a47b3c;
 }
 
-.deck-card:hover .deck-card-image {
-    transform: scale(1.04);
-
-    filter: brightness(1.08);
-}
 
 /* =========================================================
-   CONTENIDO
+   CONTENIDO DE CARTA
    ========================================================= */
 
 .deck-card-content {
-    padding: 20px;
+    padding: 18px;
 }
 
 .deck-card-content h2 {
     margin: 0 0 8px;
 
-    color: #ffffff;
+    color: #5a3d20;
 
-    font-size: 1.35rem;
+    font-weight: 900;
 }
 
-.deck-card-content p {
-    color: #999999;
-
-    line-height: 1.5;
-
-    font-size: 0.9rem;
-}
 
 /* =========================================================
    TIPO DE CARTA
@@ -413,22 +381,26 @@
 .card-type {
     display: inline-block;
 
-    padding: 5px 11px;
+    padding:
+        5px 12px;
 
-    margin-bottom: 8px;
-
-    border: 1px solid #8f6b2f;
+    margin-bottom: 12px;
 
     border-radius: 15px;
 
-    background: #222222;
+    background:
+        #d9bd7c;
 
-    color: #f0c75e;
+    border:
+        1px solid #a47b3c;
 
-    font-size: 0.8rem;
+    color: #50391f;
 
-    font-weight: bold;
+    font-size: 0.85rem;
+
+    font-weight: 800;
 }
+
 
 /* =========================================================
    BOTÓN SELECCIONAR
@@ -439,20 +411,19 @@
 
     padding: 12px;
 
-    margin-top: 8px;
+    border:
+        2px solid #7b4025;
 
-    border: 1px solid #c79d35;
-
-    border-radius: 10px;
+    border-radius: 8px;
 
     background:
         linear-gradient(135deg,
-            #f0c75e,
-            #bd8f29);
+            #b94e48,
+            #8f3d35);
 
-    color: #211b0c;
+    color: #fff8df;
 
-    font-weight: bold;
+    font-weight: 800;
 
     cursor: pointer;
 
@@ -463,24 +434,194 @@
 }
 
 .select-card-button:hover {
-    transform: translateY(-2px);
+    transform:
+        translateY(-2px);
 
-    filter: brightness(1.08);
+    filter:
+        brightness(1.12);
 
     box-shadow:
-        0 6px 15px rgba(0, 0, 0, 0.35);
+        0 6px 15px rgba(47, 72, 88, 0.3);
 }
+
+
+/* =========================================================
+   BOTÓN CUANDO ESTÁ SELECCIONADA
+   ========================================================= */
 
 .deck-card.selected .select-card-button {
     background:
         linear-gradient(135deg,
-            #8fc1a9,
-            #5d987b);
+            #168aad,
+            #0b607d);
 
-    border-color: #8fc1a9;
+    border-color:
+        #5bc0eb;
 
-    color: #10261c;
+    box-shadow:
+        0 0 12px rgba(91, 192, 235, 0.2);
 }
+
+
+/* =========================================================
+   MAZO SELECCIONADO
+   ========================================================= */
+
+.selected-deck {
+    margin-bottom: 30px;
+
+    padding: 22px;
+
+    background:
+        linear-gradient(145deg,
+            rgba(244, 252, 253, 0.96),
+            rgba(213, 239, 243, 0.96));
+
+    border:
+        3px solid #6fa8b8;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 12px 30px rgba(47, 72, 88, 0.2),
+
+        0 0 20px rgba(91, 192, 235, 0.08);
+}
+
+.selected-deck h2 {
+    margin-top: 0;
+
+    color: #28566b;
+
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   LISTA DE CARTAS SELECCIONADAS
+   ========================================================= */
+
+.selected-cards-list {
+    display: grid;
+
+    gap: 10px;
+}
+
+.selected-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 10px;
+
+    background:
+        #faffff;
+
+    border:
+        1px solid #8fc8d5;
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 3px 10px rgba(47, 72, 88, 0.12);
+}
+
+.selected-card img {
+    width: 55px;
+    height: 55px;
+
+    object-fit: cover;
+
+    border-radius: 6px;
+
+    border:
+        2px solid #6fa8b8;
+}
+
+
+/* =========================================================
+   POSICIÓN
+   ========================================================= */
+
+.card-position {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    min-width: 30px;
+    height: 30px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(135deg,
+            #168aad,
+            #0b607d);
+
+    border:
+        2px solid #5bc0eb;
+
+    color: white;
+
+    font-weight: 900;
+
+    box-shadow:
+        0 0 10px rgba(91, 192, 235, 0.2);
+}
+
+
+/* =========================================================
+   BOTONES DE POSICIÓN
+   ========================================================= */
+
+.position-buttons {
+    display: flex;
+
+    gap: 5px;
+
+    margin-left: auto;
+}
+
+.position-buttons button {
+    width: 35px;
+    height: 35px;
+
+    border:
+        1px solid #6fa8b8;
+
+    border-radius: 7px;
+
+    background:
+        #bde5ec;
+
+    color: #28566b;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.position-buttons button:hover:not(:disabled) {
+    background:
+        #91cfdb;
+
+    transform:
+        translateY(-2px);
+}
+
+.position-buttons button:disabled {
+    opacity: 0.4;
+
+    cursor: not-allowed;
+}
+
 
 /* =========================================================
    ACCIONES
@@ -495,24 +636,26 @@
 
     flex-wrap: wrap;
 
-    margin-top: 25px;
+    margin-top: 20px;
 }
 
 .deck-button {
-    padding: 13px 25px;
+    padding:
+        13px 25px;
 
-    border: 1px solid #c79d35;
+    border:
+        2px solid #5bc0eb;
 
-    border-radius: 10px;
+    border-radius: 8px;
 
     background:
         linear-gradient(135deg,
-            #f0c75e,
-            #bd8f29);
+            #168aad,
+            #0b607d);
 
-    color: #211b0c;
+    color: #effcff;
 
-    font-weight: bold;
+    font-weight: 800;
 
     cursor: pointer;
 
@@ -523,36 +666,37 @@
 }
 
 .deck-button:hover:not(:disabled) {
-    transform: translateY(-3px);
+    transform:
+        translateY(-2px);
 
-    filter: brightness(1.08);
+    filter:
+        brightness(1.1);
 
     box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.4);
+        0 8px 20px rgba(47, 72, 88, 0.28),
+
+        0 0 15px rgba(91, 192, 235, 0.15);
 }
 
 .deck-button.secondary {
-    background: #292929;
+    background:
+        linear-gradient(135deg,
+            #6b8290,
+            #526873);
 
-    border-color: #555555;
-
-    color: #dddddd;
-}
-
-.deck-button.secondary:hover:not(:disabled) {
-    border-color: #888888;
-
-    background: #333333;
+    border-color:
+        #a9dce5;
 }
 
 .deck-button:disabled {
-    opacity: 0.4;
+    opacity: 0.5;
 
     cursor: not-allowed;
 }
 
+
 /* =========================================================
-   MENSAJES
+   MENSAJE
    ========================================================= */
 
 .deck-message {
@@ -562,10 +706,11 @@
 
     text-align: center;
 
-    color: #ff7777;
+    color: #7b241c;
 
-    font-weight: bold;
+    font-weight: 800;
 }
+
 
 /* =========================================================
    ERROR
@@ -574,96 +719,76 @@
 .error-container {
     max-width: 600px;
 
-    margin: 100px auto;
-
     padding: 50px;
 
     background:
-        linear-gradient(145deg,
-            #292929,
-            #111111);
+        #f8ffff;
 
-    border: 1px solid #8f6b2f;
+    border:
+        3px solid #6fa8b8;
 
-    border-radius: 20px;
+    border-radius: 14px;
 
     text-align: center;
 
+    color: #28566b;
+
     box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.6);
+        0 10px 30px rgba(47, 72, 88, 0.25);
 }
 
-.error-container h1 {
-    color: #ff7777;
-}
-
-.error-container p {
-    color: #aaaaaa;
-
-    line-height: 1.5;
-}
 
 /* =========================================================
-   ANIMACIÓN DE ENTRADA DE CARTAS
+   ANIMACIÓN SUAVE DE LAS CARTAS
    ========================================================= */
 
 .deck-card {
     animation:
-        card-appear 0.45s ease both;
+        airFloat 5s ease-in-out infinite;
 }
 
-@keyframes card-appear {
+.deck-card:nth-child(2n) {
+    animation-delay: -1.5s;
+}
 
-    from {
-        opacity: 0;
+.deck-card:nth-child(3n) {
+    animation-delay: -3s;
+}
 
+@keyframes airFloat {
+
+    0%,
+    100% {
         transform:
-            translateY(15px) scale(0.97);
+            translateY(0);
     }
 
-    to {
-        opacity: 1;
-
+    50% {
         transform:
-            translateY(0) scale(1);
+            translateY(-3px);
     }
 }
+
+.deck-card:hover,
+.deck-card.selected {
+    animation: none;
+}
+
 
 /* =========================================================
    RESPONSIVE
    ========================================================= */
 
-@media (max-width: 800px) {
-
-    .cards-grid {
-        grid-template-columns:
-            repeat(2,
-                minmax(0, 1fr));
-
-        gap: 15px;
-    }
-
-    .deck-card-image {
-        height: 230px;
-    }
-
-    .deck-card-content {
-        padding: 15px;
-    }
-}
-
 @media (max-width: 600px) {
 
     .deck-section {
-        padding: 20px 12px;
+        padding:
+            20px 12px;
     }
 
     .cards-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .deck-card-image {
-        height: 280px;
+        grid-template-columns:
+            1fr;
     }
 
     .selected-card {
@@ -686,20 +811,5 @@
 
     .deck-button {
         width: 100%;
-    }
-
-    .selected-deck {
-        padding: 18px;
-    }
-}
-
-@media (max-width: 380px) {
-
-    .deck-header h1 {
-        font-size: 1.8rem;
-    }
-
-    .deck-card-image {
-        height: 250px;
     }
 }

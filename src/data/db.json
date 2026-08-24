@@ -28,10 +28,10 @@
     {
       "id": "utaUOc-tfhU",
       "nickname": "aa",
-      "points": 0,
-      "wins": 0,
+      "points": 50,
+      "wins": 1,
       "losses": 0,
-      "gamesPlayed": 0,
+      "gamesPlayed": 1,
       "createdAt": "2026-08-19T01:22:03.820Z"
     },
     {
@@ -100,10 +100,10 @@
     {
       "id": "HiuqTLkdBro",
       "nickname": "oo",
-      "points": 50,
-      "wins": 1,
+      "points": 100,
+      "wins": 2,
       "losses": 0,
-      "gamesPlayed": 1,
+      "gamesPlayed": 2,
       "createdAt": "2026-08-19T03:45:09.660Z"
     },
     {
@@ -145,10 +145,10 @@
     {
       "id": "player-1787190056228",
       "nickname": "ee",
-      "points": 0,
-      "wins": 0,
+      "points": 50,
+      "wins": 1,
       "losses": 0,
-      "gamesPlayed": 0,
+      "gamesPlayed": 1,
       "createdAt": "2026-08-20T01:40:56.228Z"
     },
     {
@@ -1348,6 +1348,75 @@
       ],
       "startedAt": "2026-08-21T04:31:39.152Z",
       "endedAt": "2026-08-21T04:33:06.833Z"
+    },
+    {
+      "id": "battle-1787537275780",
+      "playerId": "player-1787190056228",
+      "playerNickname": "ee",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-019",
+        "card-020",
+        "card-017",
+        "card-018",
+        "card-015"
+      ],
+      "machineDeck": [
+        "card-003",
+        "card-002",
+        "card-016",
+        "card-012",
+        "card-007"
+      ],
+      "startedAt": "2026-08-24T02:06:54.133Z",
+      "endedAt": "2026-08-24T02:07:55.780Z"
+    },
+    {
+      "id": "battle-1787538565010",
+      "playerId": "utaUOc-tfhU",
+      "playerNickname": "aa",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-004",
+        "card-003",
+        "card-006"
+      ],
+      "machineDeck": [
+        "card-005",
+        "card-007",
+        "card-016",
+        "card-008",
+        "card-009"
+      ],
+      "startedAt": "2026-08-24T02:28:11.371Z",
+      "endedAt": "2026-08-24T02:29:25.010Z"
+    },
+    {
+      "id": "battle-1787538991097",
+      "playerId": "HiuqTLkdBro",
+      "playerNickname": "oo",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-004",
+        "card-003",
+        "card-006"
+      ],
+      "machineDeck": [
+        "card-018",
+        "card-019",
+        "card-013",
+        "card-005",
+        "card-016"
+      ],
+      "startedAt": "2026-08-24T02:35:09.328Z",
+      "endedAt": "2026-08-24T02:36:31.097Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
