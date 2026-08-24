@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 505.5 584.5">
+<svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 505.5 584.5">
   <!-- Generator: Adobe Illustrator 29.5.1, SVG Export Plug-In . SVG Version: 2.1.0 Build 141)  -->
   <defs>
     <style>
       .st0 {
         fill: #42a9e9;
       }
+
+      .st1 {
+        fill: #e1eded;
+      }
     </style>
   </defs>
   <path class="st0" d="M416.7,300.7l-160.6,144.7-160.6-144.7c37.4-22.3,84.2-20.9,84.2-20.9-8.6-198,29.5-244.1,29.5-244.1h93.6s38.2,46.1,29.5,244.1c0,0,46.8-1.4,84.2,20.9Z"/>
-  <image width="435" height="539" transform="translate(38.4 -30.1)" xlink:href="aang-cursor-click_Mesa de trabajo 1 copia 2-1.png"/>
+  <path class="st1" d="M395.4,304.9l-139.2,125.5-139.2-125.5c32.5-19.4,73.1-18.1,73.1-18.1-7.5-171.7,25.6-238.7,25.6-238.7h81.2s33.1,67,25.6,238.7c0,0,40.6-1.2,73,18.1Z"/>
   <g>
     <path class="st0" d="M23.6,467.2s114.5-71.3,154.8,67c0,0-120.2,52.6-154.8-67Z"/>
     <path class="st0" d="M488.7,467.2s-114.5-71.3-154.8,67c0,0,120.2,52.6,154.8-67Z"/>
   </g>
-  <image width="591" height="235" transform="translate(-39.6 379.9)" xlink:href="aang-cursor-click_Mesa de trabajo 1 copia 2-2.png"/>
+  <g>
+    <path class="st1" d="M39,473.1s91.7-57.1,124,53.6c0,0-96.3,42.1-124-53.6Z"/>
+    <path class="st1" d="M473.3,473.1s-91.7-57.1-124,53.6c0,0,96.3,42.1,124-53.6Z"/>
+  </g>
 </svg>

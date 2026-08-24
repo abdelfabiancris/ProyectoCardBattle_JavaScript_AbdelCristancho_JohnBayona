@@ -389,23 +389,39 @@ code {
    CURSORES CARD BATTLE ARENA
    ========================================================= */
 
+/* =========================================================
+   CURSORES PERSONALIZADOS — AANG
+   ========================================================= */
+
+/* Cursor normal */
+html,
 body {
-  cursor: url('/images/icons/aang-cursor.svg') 8 8, auto;
+    cursor: url("/images/icons/aang-cursor.svg") 8 8, auto !important;
 }
 
+
+/* Cursor al pasar sobre elementos interactivos */
 button,
 a,
 input,
 select,
+textarea,
+label,
 [data-action],
 .deck-card,
 .select-card-button {
-  cursor: url('/images/icons/aang-cursor-pointer.svg') 8 8, pointer;
+    cursor: url("/images/icons/aang-cursor-pointer.svg") 8 8, pointer !important;
 }
 
+
+/* Cursor mientras se hace clic */
 button:active,
 a:active,
+input:active,
+select:active,
+textarea:active,
 [data-action]:active,
+.deck-card:active,
 .select-card-button:active {
-  cursor: url('/images/icons/aang-cursor-click.svg') 8 8, pointer;
+    cursor: url("/images/icons/aang-cursor-click.svg") 8 8, pointer !important;
 }
