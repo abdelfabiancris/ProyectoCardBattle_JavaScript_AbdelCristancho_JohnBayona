@@ -13,6 +13,9 @@ export class BattleComponent extends HTMLElement {
         this.logs = [];
         this.startedAt = null;
         this.resultSaved = false;
+        this.battleMode = 'manual';
+        this.isProcessingTurn = false;
+        this.pendingTimers = [];
 
         /*
          * HP anterior de cada carta.
@@ -23,6 +26,42 @@ export class BattleComponent extends HTMLElement {
         this.previousMachineHp = null;
 
         this.renderLoading();
+    }
+
+    scheduleTimer(callback, delay) {
+
+        const timerId = setTimeout(
+            () => {
+
+                this.pendingTimers =
+                    this.pendingTimers.filter(
+                        (id) => id !== timerId
+                    );
+
+                callback();
+
+            },
+            delay
+        );
+
+        this.pendingTimers.push(
+            timerId
+        );
+
+        return timerId;
+    }
+
+    clearBattleTimers() {
+
+        this.pendingTimers.forEach(
+            (timerId) => {
+                clearTimeout(timerId);
+            }
+        );
+
+        this.pendingTimers = [];
+
+        this.isProcessingTurn = false;
     }
 
     setBattleData(data) {
@@ -53,6 +92,7 @@ export class BattleComponent extends HTMLElement {
 
         this.render();
         this.configureEvents();
+        this.configureModeSelector();
 
         /*
          * Si la máquina empieza,
@@ -157,6 +197,24 @@ export class BattleComponent extends HTMLElement {
                         Ronda ${state.round}
                     </div>
 
+                    <div class="battle-mode">
+                        <label for="battle-mode-select">
+                            🎮 Modo de batalla:
+                        </label>
+
+                        <select id="battle-mode-select">
+                            <option value="manual"
+                                ${this.battleMode === 'manual' ? 'selected' : ''}>
+                                Manual
+                            </option>
+
+                            <option value="automatic"
+                                ${this.battleMode === 'automatic' ? 'selected' : ''}>
+                                Automático
+                            </option>
+                        </select>
+                    </div>
+
                 </header>
 
                 <main class="battle-arena">
@@ -179,11 +237,13 @@ export class BattleComponent extends HTMLElement {
 
                 </main>
 
-                ${state.turn === 'player'
-                ? this.renderControls(
-                    playerCard
-                )
-                : `
+                ${state.gameOver
+                ? ''
+                : state.turn === 'player'
+                    ? this.renderControls(
+                        playerCard
+                    )
+                    : `
                         <div
                             class="
                                 battle-controls
@@ -559,6 +619,148 @@ export class BattleComponent extends HTMLElement {
             );
     }
 
+    startAutomaticTurn() {
+
+        if (
+            !this.engine ||
+            this.engine.gameOver ||
+            this.isProcessingTurn
+        ) {
+            return;
+        }
+
+        if (
+            this.battleMode !== 'automatic' ||
+            this.engine.turn !== 'player'
+        ) {
+            return;
+        }
+
+        this.isProcessingTurn = true;
+
+        this.disableControls();
+
+        const action =
+            this.getAutomaticPlayerAction();
+
+        if (!action) {
+            this.isProcessingTurn = false;
+            return;
+        }
+
+        this.logs.unshift(
+            `🤖 Modo automático: ` +
+            `el jugador utilizará ${action}.`
+        );
+
+        this.render();
+        this.configureEvents();
+        this.configureModeSelector();
+
+
+        this.scheduleTimer(
+            () => {
+
+
+                if (
+                    !this.engine ||
+                    this.engine.gameOver
+                ) {
+                    this.isProcessingTurn = false;
+                    return;
+                }
+
+                this.isProcessingTurn = false;
+
+                this.playerAction(action);
+
+            },
+            1000
+        );
+    }
+
+    configureModeSelector() {
+
+        const selector =
+            this.querySelector(
+                '#battle-mode-select'
+            );
+
+        if (!selector) {
+            return;
+        }
+
+        selector.addEventListener(
+            'change',
+            (event) => {
+
+                this.battleMode =
+                    event.target.value;
+
+                if (
+                    this.battleMode === 'automatic' &&
+                    this.engine?.turn === 'player'
+                ) {
+
+                    this.startAutomaticTurn();
+                }
+            }
+        );
+    }
+
+    getAutomaticPlayerAction() {
+
+        const actions =
+            this.engine.getAvailableActions(
+                'player'
+            );
+
+        if (!actions.length) {
+            return null;
+        }
+
+        /*
+        * Si el poder especial está disponible,
+        * le damos prioridad algunas veces.
+        */
+        if (
+            actions.includes('special') &&
+            Math.random() < 0.5
+        ) {
+            return 'special';
+        }
+
+        /*
+        * Si la vida está baja,
+        * aumentamos la posibilidad de defenderse.
+        */
+        const playerCard =
+            this.engine.getState().playerCard;
+
+        const hpPercentage =
+            (playerCard.currentHp / 250) * 100;
+
+        if (
+            actions.includes('defense') &&
+            hpPercentage <= 30 &&
+            Math.random() < 0.6
+        ) {
+            return 'defense';
+        }
+
+        /*
+        * Si no se cumplen las condiciones
+        * anteriores, elegimos una acción
+        * válida al azar.
+        */
+        const randomIndex =
+            Math.floor(
+                Math.random() * actions.length
+            );
+
+        return actions[randomIndex];
+    }
+
     /*
      * ========================================
      * TURNO DEL JUGADOR
@@ -569,10 +771,13 @@ export class BattleComponent extends HTMLElement {
 
         if (
             !this.engine ||
-            this.engine.gameOver
+            this.engine.gameOver ||
+            this.isProcessingTurn
         ) {
             return;
         }
+
+        this.isProcessingTurn = true;
 
         this.disableControls();
 
@@ -588,8 +793,11 @@ export class BattleComponent extends HTMLElement {
                 `❌ ${result.message}`
             );
 
+            this.isProcessingTurn = false;
+
             this.render();
             this.configureEvents();
+            this.configureModeSelector();
 
             return;
         }
@@ -617,6 +825,7 @@ export class BattleComponent extends HTMLElement {
          */
         this.render();
         this.configureEvents();
+        this.configureModeSelector();
 
         /*
          * Animamos la barra de vida.
@@ -642,23 +851,59 @@ export class BattleComponent extends HTMLElement {
          */
         if (result.gameOver) {
 
-            setTimeout(
+            this.isProcessingTurn = false;
+
+            this.clearBattleTimers();
+
+            /*
+            * Actualizamos la interfaz con el
+            * estado final de la batalla.
+            */
+            this.render();
+
+            this.configureEvents();
+
+            this.configureModeSelector();
+
+            /*
+            * Mostramos el resultado después
+            * de actualizar el DOM.
+            */
+            this.scheduleTimer(
                 () => {
+
                     this.showResult();
+
                 },
                 800
             );
 
             return;
         }
-
         /*
          * Si una carta fue derrotada.
          */
         if (result.defeated) {
 
-            setTimeout(
+            if (this.engine.gameOver) {
+
+                this.isProcessingTurn = false;
+                this.clearBattleTimers();
+                this.showResult();
+
+                return;
+            }
+
+            this.scheduleTimer(
                 () => {
+
+                    if (
+                        !this.engine ||
+                        this.engine.gameOver
+                    ) {
+                        this.isProcessingTurn = false;
+                        return;
+                    }
 
                     if (
                         this.engine.turn === 'machine'
@@ -666,9 +911,21 @@ export class BattleComponent extends HTMLElement {
 
                         this.renderMachineThinking();
 
-                        setTimeout(
+                        this.scheduleTimer(
                             () => {
+
+                                if (
+                                    !this.engine ||
+                                    this.engine.gameOver
+                                ) {
+                                    this.isProcessingTurn = false;
+                                    return;
+                                }
+
+                                this.isProcessingTurn = false;
+
                                 this.machineAction();
+
                             },
                             800
                         );
@@ -690,9 +947,21 @@ export class BattleComponent extends HTMLElement {
 
             this.renderMachineThinking();
 
-            setTimeout(
+            this.scheduleTimer(
                 () => {
+
+                    if (
+                        !this.engine ||
+                        this.engine.gameOver
+                    ) {
+                        this.isProcessingTurn = false;
+                        return;
+                    }
+
+                    this.isProcessingTurn = false;
+
                     this.machineAction();
+
                 },
                 1000
             );
@@ -715,9 +984,9 @@ export class BattleComponent extends HTMLElement {
         }
 
         /*
-         * Guardamos el HP del jugador
-         * ANTES de recibir el ataque.
-         */
+        * Guardamos el HP del jugador
+        * ANTES de recibir el ataque.
+        */
         const previousPlayerHp =
             this.engine.getState()
                 .playerCard.currentHp;
@@ -725,26 +994,87 @@ export class BattleComponent extends HTMLElement {
         const result =
             this.engine.machineTurn();
 
+
         if (!result) {
+
+            console.error(
+                '❌ machineTurn() devolvió null'
+            );
+
             return;
         }
 
-        this.addResultToLog(result);
+        this.addResultToLog(
+            result
+        );
 
-        this.playSoundForAction(result);
+        this.playSoundForAction(
+            result
+        );
 
         /*
-         * Primero actualizamos el HTML.
-         * Así las cartas existen en el DOM
-         * antes de ejecutar las animaciones.
-         */
+        * ========================================
+        * PARTIDA TERMINADA
+        * ========================================
+        *
+        * IMPORTANTE:
+        *
+        * Comprobamos gameOver ANTES de hacer
+        * render().
+        *
+        * De esta manera evitamos que aparezca
+        * "No hay carta disponible" y
+        * "La máquina está pensando..."
+        * como pantalla final.
+        */
+        if (result.gameOver) {
+
+            this.isProcessingTurn = false;
+
+            this.clearBattleTimers();
+
+            /*
+            * Actualizamos la interfaz una última vez.
+            *
+            * El motor ya cambió la carta derrotada,
+            * por lo que render() mostrará el estado
+            * final de las cartas.
+            */
+            this.render();
+
+            this.configureEvents();
+
+            this.configureModeSelector();
+
+            /*
+            * Mostramos el resultado después
+            * de actualizar la interfaz.
+            */
+            this.showResult();
+
+            return;
+        }
+
+        /*
+        * ========================================
+        * LA BATALLA CONTINÚA
+        * ========================================
+        *
+        * Como todavía no terminó,
+        * actualizamos el HTML.
+        */
         this.render();
+
         this.configureEvents();
 
+        this.configureModeSelector();
+
         /*
-         * Si la máquina atacó,
-         * animamos el golpe y la barra.
-         */
+        * ========================================
+        * ANIMACIÓN DE LA ACCIÓN
+        * ========================================
+        */
+
         if (
             result.type === 'attack' ||
             result.type === 'special'
@@ -755,19 +1085,19 @@ export class BattleComponent extends HTMLElement {
                     .playerCard.currentHp;
 
             /*
-             * Animación de ataque y daño.
-             */
+            * Animación del ataque.
+            */
             this.playActionAnimation(
                 result.type,
                 'machine'
             );
 
             /*
-             * Animación de la barra de vida.
-             *
-             * Esperamos 250 ms para sincronizar
-             * la barra con el impacto de la carta.
-             */
+            * Animación de la barra de vida.
+            *
+            * Esperamos 250 ms para sincronizar
+            * la barra con el impacto.
+            */
             setTimeout(
                 () => {
 
@@ -782,17 +1112,17 @@ export class BattleComponent extends HTMLElement {
             );
 
             /*
-             * Guardamos el nuevo HP.
-             */
+            * Guardamos el nuevo HP.
+            */
             this.previousPlayerHp =
                 newPlayerHp;
 
         } else {
 
             /*
-             * Si la máquina utilizó defensa,
-             * solamente ejecutamos su animación.
-             */
+            * Si la máquina utilizó defensa,
+            * solamente ejecutamos su animación.
+            */
             this.playActionAnimation(
                 result.type,
                 'machine'
@@ -800,25 +1130,11 @@ export class BattleComponent extends HTMLElement {
         }
 
         /*
-         * Si terminó la partida.
-         */
-        if (result.gameOver) {
+        * ========================================
+        * ACTUALIZAR HP DE LA MÁQUINA
+        * ========================================
+        */
 
-            setTimeout(
-                () => {
-                    this.showResult();
-                },
-                900
-            );
-
-            return;
-        }
-
-        /*
-         * Si la máquina no terminó
-         * la batalla, actualizamos el
-         * HP anterior de su carta.
-         */
         const state =
             this.engine.getState();
 
@@ -826,6 +1142,36 @@ export class BattleComponent extends HTMLElement {
 
             this.previousMachineHp =
                 state.machineCard.currentHp;
+        }
+
+        /*
+        * ========================================
+        * FINAL DEL TURNO
+        * ========================================
+        */
+
+        this.isProcessingTurn = false;
+
+        /*
+        * ========================================
+        * SIGUIENTE TURNO AUTOMÁTICO
+        * ========================================
+        */
+
+        if (
+            this.battleMode === 'automatic' &&
+            this.engine.turn === 'player' &&
+            !this.engine.gameOver
+        ) {
+
+            this.scheduleTimer(
+                () => {
+
+                    this.startAutomaticTurn();
+
+                },
+                1000
+            );
         }
     }
 
@@ -972,12 +1318,28 @@ export class BattleComponent extends HTMLElement {
             result.type === 'attack'
         ) {
 
-            this.logs.unshift(
-                `⚔️ ${result.attacker}
-                utilizó ${result.actionName}
-                y causó ${result.damage}
-                de daño a ${result.defender}.`
-            );
+            if (result.dodged) {
+
+                this.logs.unshift(
+                    `💨 ¡ATAQUE ESQUIVADO! 
+                    ${result.defender} esquivó 
+                    el ataque de ${result.attacker}.`
+                );
+
+            } else {
+
+                const criticalMessage =
+                    result.critical
+                        ? ' 💥 ¡GOLPE CRÍTICO!'
+                        : '';
+
+                this.logs.unshift(
+                    `⚔️ ${result.attacker}
+                    utilizó ${result.actionName}
+                    y causó ${result.damage}
+                    de daño a ${result.defender}.${criticalMessage}`
+                );
+            }
 
             if (result.defeated) {
 
@@ -1008,12 +1370,28 @@ export class BattleComponent extends HTMLElement {
             result.type === 'special'
         ) {
 
-            this.logs.unshift(
-                `⚡ ${result.attacker}
-                utilizó ${result.actionName}
-                y causó ${result.damage}
-                de daño a ${result.defender}.`
-            );
+            if (result.dodged) {
+
+                this.logs.unshift(
+                    `💨 ¡ATAQUE ESQUIVADO! 
+                    ${result.defender} esquivó 
+                    el poder especial de ${result.attacker}.`
+                );
+
+            } else {
+
+                const criticalMessage =
+                    result.critical
+                        ? ' 💥 ¡GOLPE CRÍTICO!'
+                        : '';
+
+                this.logs.unshift(
+                    `⚡ ${result.attacker}
+                    utilizó ${result.actionName}
+                    y causó ${result.damage}
+                    de daño a ${result.defender}.${criticalMessage}`
+                );
+            }
 
             if (result.defeated) {
 
@@ -1034,11 +1412,53 @@ export class BattleComponent extends HTMLElement {
     playSoundForAction(result) {
 
         if (
-            result.type === 'attack'
+            result.type === 'attack' ||
+            result.type === 'special'
         ) {
 
-            playSound('attack');
+            /*
+            * Si el ataque fue esquivado,
+            * reproducimos únicamente el sonido
+            * de esquive.
+            */
+            if (result.dodged) {
 
+                playSound('dodge');
+
+                return;
+            }
+
+            /*
+            * Sonido normal del ataque.
+            */
+            if (result.type === 'attack') {
+
+                playSound('attack');
+
+            } else {
+
+                playSound('special');
+            }
+
+            /*
+            * Si fue golpe crítico,
+            * reproducimos el sonido crítico.
+            */
+            if (result.critical) {
+
+                setTimeout(
+                    () => {
+                        playSound('critical');
+                    },
+                    150
+                );
+            }
+
+            /*
+            * Si la carta fue derrotada,
+            * reproducimos el sonido de derrota
+            * de la carta.
+            */
             if (result.defeated) {
 
                 setTimeout(
@@ -1052,30 +1472,14 @@ export class BattleComponent extends HTMLElement {
             return;
         }
 
+        /*
+        * Defensa.
+        */
         if (
             result.type === 'defense'
         ) {
 
             playSound('defense');
-
-            return;
-        }
-
-        if (
-            result.type === 'special'
-        ) {
-
-            playSound('special');
-
-            if (result.defeated) {
-
-                setTimeout(
-                    () => {
-                        playSound('defeated');
-                    },
-                    250
-                );
-            }
         }
     }
 
@@ -1353,39 +1757,66 @@ export class BattleComponent extends HTMLElement {
         );
     }
 
+
     /*
      * ========================================
      * RESULTADO FINAL
      * ========================================
      */
-
     async showResult() {
+
+
+        if (!this.engine) {
+            console.error(
+                '❌ No existe el motor de batalla.'
+            );
+            return;
+        }
 
         const resultContainer =
             this.querySelector(
                 '#battle-result'
             );
 
+
         if (!resultContainer) {
+            console.error(
+                '❌ No se encontró #battle-result'
+            );
             return;
         }
 
+        /*
+        * Determinamos quién ganó.
+        */
         const won =
             this.engine.winner === 'player';
 
+        /*
+        * Resultado que se enviará
+        * posteriormente a GameApp.
+        */
         const result =
             won
                 ? 'win'
                 : 'loss';
 
+        /*
+        * Puntos correspondientes.
+        */
         const pointsAwarded =
             won
                 ? 50
                 : 10;
 
+
+
         /*
-         * Sonido del resultado.
-         */
+        * ========================================
+        * SONIDO DEL RESULTADO
+        * ========================================
+        */
+
         if (won) {
 
             playSound('victory');
@@ -1395,9 +1826,13 @@ export class BattleComponent extends HTMLElement {
             playSound('defeat');
         }
 
+
         /*
-         * Mostrar resultado.
-         */
+        * ========================================
+        * MOSTRAR RESULTADO
+        * ========================================
+        */
+
         resultContainer.innerHTML = `
             <div
                 class="
@@ -1449,12 +1884,43 @@ export class BattleComponent extends HTMLElement {
             </div>
         `;
 
+
         /*
-         * Avisamos a GameApp.
-         */
-        this.querySelector(
-            '#finish-battle'
-        ).addEventListener(
+        * ========================================
+        * LLEVAR EL RESULTADO A LA VISTA
+        * ========================================
+        *
+        * Como #battle-result está después
+        * del registro de combate, hacemos
+        * scroll hasta el cartel.
+        */
+
+        resultContainer.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+
+        /*
+        * ========================================
+        * BOTÓN VER LEADERBOARD
+        * ========================================
+        */
+
+        const finishButton =
+            this.querySelector(
+                '#finish-battle'
+            );
+
+        if (!finishButton) {
+
+            console.error(
+                '❌ No se encontró #finish-battle'
+            );
+
+            return;
+        }
+
+        finishButton.addEventListener(
             'click',
             () => {
 
@@ -1475,7 +1941,10 @@ export class BattleComponent extends HTMLElement {
                                     this.engine,
 
                                 startedAt:
-                                    this.startedAt
+                                    this.startedAt,
+
+                                mode:
+                                    this.battleMode
                             },
 
                             bubbles: true

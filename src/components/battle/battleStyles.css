@@ -1756,3 +1756,95 @@
         box-shadow: none;
     }
 }
+
+
+/* ========================================
+   SELECTOR DE MODO DE BATALLA
+   ======================================== */
+
+.battle-mode {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.battle-mode label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #f5e6c8;
+}
+
+#battle-mode-select {
+    appearance: none;
+    -webkit-appearance: none;
+
+    min-width: 125px;
+
+    padding: 8px 38px 8px 14px;
+
+    border: 2px solid #8f5b16;
+    border-radius: 20px;
+
+    background-color: #25100c;
+    color: #f5e6c8;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    outline: none;
+
+    background-image:
+        linear-gradient(
+            45deg,
+            transparent 50%,
+            #e0a83a 50%
+        ),
+        linear-gradient(
+            135deg,
+            #e0a83a 50%,
+            transparent 50%
+        );
+
+    background-position:
+        calc(100% - 17px) 50%,
+        calc(100% - 11px) 50%;
+
+    background-size:
+        6px 6px,
+        6px 6px;
+
+    background-repeat: no-repeat;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease;
+}
+
+#battle-mode-select:hover {
+    border-color: #d89b2b;
+
+    background-color: #35150f;
+
+    box-shadow:
+        0 0 10px rgba(216, 155, 43, 0.25);
+}
+
+#battle-mode-select:focus {
+    border-color: #e0a83a;
+
+    box-shadow:
+        0 0 0 3px rgba(224, 168, 58, 0.15),
+        0 0 12px rgba(224, 168, 58, 0.25);
+}
+
+#battle-mode-select option {
+    background-color: #25100c;
+    color: #f5e6c8;
+    font-weight: bold;
+}

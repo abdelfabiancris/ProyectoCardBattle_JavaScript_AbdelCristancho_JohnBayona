@@ -4,7 +4,9 @@ const sounds = {
     special: '/sounds/special.mp3',
     defeated: '/sounds/defeated.mp3',
     victory: '/sounds/victory.mp3',
-    defeat: '/sounds/defeat.mp3'
+    defeat: '/sounds/defeat.mp3',
+    critical: '/sounds/critical.mp3',
+    dodge: '/sounds/dodge.mp3'
 };
 
 export function playSound(type) {

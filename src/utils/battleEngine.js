@@ -1,5 +1,9 @@
 const MAX_HP = 250;
 
+const CRITICAL_CHANCE = 0.12;
+const CRITICAL_MULTIPLIER = 1.5;
+const DODGE_CHANCE = 0.08;
+
 export class BattleEngine {
 
     constructor(
@@ -188,6 +192,64 @@ export class BattleEngine {
         );
     }
 
+    resolveDamage(target, damage) {
+
+        /*
+         * Primero comprobamos si el defensor
+         * esquiva completamente el ataque.
+         */
+        const dodged =
+            Math.random() < DODGE_CHANCE;
+
+        if (dodged) {
+
+            return {
+                damage: 0,
+                dodged: true,
+                critical: false
+            };
+        }
+
+        /*
+         * Si no esquivó, comprobamos
+         * si el ataque es crítico.
+         */
+        const critical =
+            Math.random() < CRITICAL_CHANCE;
+
+        let finalDamage =
+            damage;
+
+        if (critical) {
+
+            finalDamage =
+                Math.round(
+                    finalDamage *
+                    CRITICAL_MULTIPLIER
+                );
+        }
+
+        /*
+         * Finalmente aplicamos la defensa.
+         */
+        const damageAfterDefense =
+            this.applyDamage(
+                target,
+                finalDamage
+            );
+
+        return {
+            damage:
+                damageAfterDefense,
+
+            dodged:
+                false,
+
+            critical:
+                critical
+        };
+    }
+
     /*
      * Aplica el daño al objetivo.
      *
@@ -196,223 +258,223 @@ export class BattleEngine {
      */
 
     applyDamage(
-    target,
-    damage
-) {
-
-    let finalDamage =
-        damage;
-
-    if (target.isDefending) {
-
-        /*
-         * Utilizamos la reducción configurada
-         * en la carta.
-         *
-         * Si por alguna razón la carta no tiene
-         * damageReduction, utilizamos 50%.
-         */
-        const damageReduction =
-            target.defense?.damageReduction ?? 0.5;
-
-        finalDamage =
-            Math.round(
-                damage *
-                (1 - damageReduction)
-            );
-
-        /*
-         * La defensa solo protege
-         * contra el siguiente ataque.
-         */
-        target.isDefending =
-            false;
-    }
-
-    target.currentHp =
-        Math.max(
-            0,
-            target.currentHp -
-            finalDamage
-        );
-
-    if (
-        target.currentHp === 0
+        target,
+        damage
     ) {
 
-        target.defeated =
-            true;
-    }
+        let finalDamage =
+            damage;
 
-    return finalDamage;
-}
+        if (target.isDefending) {
+
+            /*
+             * Utilizamos la reducción configurada
+             * en la carta.
+             *
+             * Si por alguna razón la carta no tiene
+             * damageReduction, utilizamos 50%.
+             */
+            const damageReduction =
+                target.defense?.damageReduction ?? 0.5;
+
+            finalDamage =
+                Math.round(
+                    damage *
+                    (1 - damageReduction)
+                );
+
+            /*
+             * La defensa solo protege
+             * contra el siguiente ataque.
+             */
+            target.isDefending =
+                false;
+        }
+
+        target.currentHp =
+            Math.max(
+                0,
+                target.currentHp -
+                finalDamage
+            );
+
+        if (
+            target.currentHp === 0
+        ) {
+
+            target.defeated =
+                true;
+        }
+
+        return finalDamage;
+    }
 
     /*
      * Ejecuta una acción del jugador
      * o de la máquina.
      */
-    
+
     performAction(owner, action) {
 
-    if (this.gameOver) {
-        return {
-            success: false,
-            message: 'La partida ya terminó.'
-        };
-    }
+        if (this.gameOver) {
+            return {
+                success: false,
+                message: 'La partida ya terminó.'
+            };
+        }
 
-    if (owner !== this.turn) {
-        return {
-            success: false,
-            message: 'No es el turno de este jugador.'
-        };
-    }
+        if (owner !== this.turn) {
+            return {
+                success: false,
+                message: 'No es el turno de este jugador.'
+            };
+        }
 
-    const attacker =
-        this.getCurrentCard(owner);
+        const attacker =
+            this.getCurrentCard(owner);
 
-    const defender =
-        this.getOpponent(owner);
+        const defender =
+            this.getOpponent(owner);
 
-    if (!attacker || !defender) {
-        return {
-            success: false,
-            message: 'No hay cartas disponibles.'
-        };
-    }
+        if (!attacker || !defender) {
+            return {
+                success: false,
+                message: 'No hay cartas disponibles.'
+            };
+        }
 
-    /*
-     * Primero obtenemos las acciones disponibles.
-     */
-    const availableActions =
-        this.getAvailableActions(owner);
+        /*
+         * Primero obtenemos las acciones disponibles.
+         */
+        const availableActions =
+            this.getAvailableActions(owner);
 
-    /*
-     * Comprobamos que la acción exista
-     * antes de modificar cualquier estado.
-     */
-    if (!availableActions.includes(action)) {
+        /*
+         * Comprobamos que la acción exista
+         * antes de modificar cualquier estado.
+         */
+        if (!availableActions.includes(action)) {
 
-        return {
-            success: false,
-            message: 'Esta acción no está disponible.'
-        };
-    }
+            return {
+                success: false,
+                message: 'Esta acción no está disponible.'
+            };
+        }
 
-    /*
-     * El cooldown disminuye al comenzar
-     * un nuevo turno propio.
-     *
-     * Como la acción ya fue validada,
-     * aquí sí podemos actualizarlo.
-     */
-    if (attacker.specialCooldown > 0) {
-        attacker.specialCooldown--;
-    }
+        /*
+         * El cooldown disminuye al comenzar
+         * un nuevo turno propio.
+         *
+         * Como la acción ya fue validada,
+         * aquí sí podemos actualizarlo.
+         */
+        if (attacker.specialCooldown > 0) {
+            attacker.specialCooldown--;
+        }
 
-    let result = null;
+        let result = null;
 
-    /*
-     * ATAQUE NORMAL
-     */
-    if (action.startsWith('attack-')) {
+        /*
+         * ATAQUE NORMAL
+         */
+        if (action.startsWith('attack-')) {
 
-        result =
-            this.normalAttack(
-                attacker,
-                defender,
-                action
+            result =
+                this.normalAttack(
+                    attacker,
+                    defender,
+                    action
+                );
+        }
+
+        /*
+         * DEFENSA
+         */
+        else if (action === 'defense') {
+
+            result =
+                this.defend(
+                    attacker
+                );
+        }
+
+        /*
+         * PODER ESPECIAL
+         */
+        else if (action === 'special') {
+
+            result =
+                this.specialAttack(
+                    attacker,
+                    defender
+                );
+        }
+
+        /*
+         * Si por alguna razón no se generó
+         * ningún resultado, detenemos la acción.
+         */
+        if (!result) {
+
+            return {
+                success: false,
+                message: 'No se pudo ejecutar la acción.'
+            };
+        }
+
+        /*
+         * La carta acaba de realizar
+         * un turno propio.
+         */
+        attacker.ownTurns++;
+
+        /*
+         * Guardamos la acción.
+         */
+        this.history.push(result);
+
+        /*
+         * Si el defensor fue derrotado,
+         * entra su siguiente carta.
+         */
+        if (defender.defeated) {
+
+            this.changeDefeatedCard(
+                owner === 'player'
+                    ? 'machine'
+                    : 'player'
             );
-    }
+        }
 
-    /*
-     * DEFENSA
-     */
-    else if (action === 'defense') {
-
-        result =
-            this.defend(
-                attacker
-            );
-    }
-
-    /*
-     * PODER ESPECIAL
-     */
-    else if (action === 'special') {
-
-        result =
-            this.specialAttack(
-                attacker,
-                defender
-            );
-    }
-
-    /*
-     * Si por alguna razón no se generó
-     * ningún resultado, detenemos la acción.
-     */
-    if (!result) {
+        /*
+         * Si la partida continúa,
+         * cambiamos el turno.
+         */
+        if (!this.gameOver) {
+            this.changeTurn();
+        }
 
         return {
-            success: false,
-            message: 'No se pudo ejecutar la acción.'
+            success: true,
+
+            ...result,
+
+            gameOver:
+                this.gameOver,
+
+            winner:
+                this.winner,
+
+            turn:
+                this.turn,
+
+            playerCard:
+                this.getPlayerCard(),
+
+            machineCard:
+                this.getMachineCard()
         };
     }
-
-    /*
-     * La carta acaba de realizar
-     * un turno propio.
-     */
-    attacker.ownTurns++;
-
-    /*
-     * Guardamos la acción.
-     */
-    this.history.push(result);
-
-    /*
-     * Si el defensor fue derrotado,
-     * entra su siguiente carta.
-     */
-    if (defender.defeated) {
-
-        this.changeDefeatedCard(
-            owner === 'player'
-                ? 'machine'
-                : 'player'
-        );
-    }
-
-    /*
-     * Si la partida continúa,
-     * cambiamos el turno.
-     */
-    if (!this.gameOver) {
-        this.changeTurn();
-    }
-
-    return {
-        success: true,
-
-        ...result,
-
-        gameOver:
-            this.gameOver,
-
-        winner:
-            this.winner,
-
-        turn:
-            this.turn,
-
-        playerCard:
-            this.getPlayerCard(),
-
-        machineCard:
-            this.getMachineCard()
-    };
-}
 
     normalAttack(
         attacker,
@@ -445,8 +507,8 @@ export class BattleEngine {
                 attack.baseDamage
             );
 
-        const finalDamage =
-            this.applyDamage(
+        const damageResult =
+            this.resolveDamage(
                 defender,
                 damage
             );
@@ -468,7 +530,13 @@ export class BattleEngine {
                 attack.baseDamage,
 
             damage:
-                finalDamage,
+                damageResult.damage,
+
+            critical:
+                damageResult.critical,
+
+            dodged:
+                damageResult.dodged,
 
             targetHp:
                 defender.currentHp,
@@ -520,8 +588,8 @@ export class BattleEngine {
                 special.baseDamage
             );
 
-        const finalDamage =
-            this.applyDamage(
+        const damageResult =
+            this.resolveDamage(
                 defender,
                 damage
             );
@@ -550,7 +618,13 @@ export class BattleEngine {
                 special.baseDamage,
 
             damage:
-                finalDamage,
+                damageResult.damage,
+
+            critical:
+                damageResult.critical,
+
+            dodged:
+                damageResult.dodged,
 
             targetHp:
                 defender.currentHp,

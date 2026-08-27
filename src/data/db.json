@@ -10,10 +10,10 @@
     {
       "id": "xZrpAkoRmXc",
       "nickname": "a",
-      "points": 0,
-      "wins": 0,
+      "points": 50,
+      "wins": 1,
       "losses": 0,
-      "gamesPlayed": 0,
+      "gamesPlayed": 1,
       "createdAt": "2026-08-19T01:06:23.693Z"
     },
     {
@@ -1463,6 +1463,30 @@
       ],
       "startedAt": "2026-08-24T05:44:54.130Z",
       "endedAt": "2026-08-24T05:45:44.819Z"
+    },
+    {
+      "id": "battle-1787870559412",
+      "playerId": "xZrpAkoRmXc",
+      "playerNickname": "a",
+      "result": "win",
+      "mode": "automatic",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-003",
+        "card-004",
+        "card-005"
+      ],
+      "machineDeck": [
+        "card-012",
+        "card-013",
+        "card-017",
+        "card-010",
+        "card-018"
+      ],
+      "startedAt": "2026-08-27T22:40:14.331Z",
+      "endedAt": "2026-08-27T22:42:39.412Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

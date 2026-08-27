@@ -298,6 +298,9 @@ export class GameApp extends HTMLElement {
                 result:
                     data.result,
 
+                mode:
+                    data.mode,
+
                 pointsAwarded:
                     points,
 
@@ -327,15 +330,6 @@ export class GameApp extends HTMLElement {
                 battle
             );
 
-            console.log(
-                'Jugador actualizado:',
-                this.currentPlayer
-            );
-
-            console.log(
-                'Batalla guardada:',
-                battle
-            );
 
             /*
              * Después de guardar todo,
