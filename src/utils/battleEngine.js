@@ -189,50 +189,72 @@ export class BattleEngine {
     }
 
     /*
-     * Aplica el daño al objetivo.
+     * Resuelve todos los eventos que pueden
+     * modificar el daño de un ataque.
      *
-     * Si está defendiendo,
-     * recibe solamente el 50%.
+     * Orden obligatorio del examen:
+     * 1. daño aleatorio
+     * 2. esquive
+     * 3. golpe crítico
+     * 4. defensa
+     * 5. redondeo
+     * 6. descuento de HP
      */
-    applyDamage(
-        target,
-        damage
-    ) {
+    resolveDamage(target, damage) {
+
+        const dodged =
+            Math.random() < 0.08;
+
+        if (dodged) {
+
+            return {
+                damage: 0,
+                dodged: true,
+                critical: false,
+                defended: target.isDefending
+            };
+        }
+
+        const critical =
+            Math.random() < 0.12;
 
         let finalDamage =
-            damage;
+            critical
+                ? damage * 1.5
+                : damage;
 
-        if (target.isDefending) {
+        const defended =
+            target.isDefending;
 
-            finalDamage =
-                Math.round(
-                    damage * 0.5
-                );
+        if (defended) {
+
+            finalDamage *= 0.5;
 
             /*
-             * La defensa solo protege
+             * La defensa protege únicamente
              * contra el siguiente ataque.
              */
-            target.isDefending =
-                false;
+            target.isDefending = false;
         }
+
+        finalDamage = Math.round(finalDamage);
 
         target.currentHp =
             Math.max(
                 0,
-                target.currentHp -
-                finalDamage
+                target.currentHp - finalDamage
             );
 
-        if (
-            target.currentHp === 0
-        ) {
-
-            target.defeated =
-                true;
+        if (target.currentHp === 0) {
+            target.defeated = true;
         }
 
-        return finalDamage;
+        return {
+            damage: finalDamage,
+            dodged: false,
+            critical,
+            defended
+        };
     }
 
     /*
@@ -378,6 +400,13 @@ export class BattleEngine {
         }
 
         /*
+         * Identificamos quién ejecutó la acción.
+         * Esto también permite detectar defensas
+         * consecutivas en el modo automático.
+         */
+        result.owner = owner;
+
+        /*
          * El turno propio se contabiliza
          * después de realizar la acción.
          */
@@ -472,8 +501,8 @@ export class BattleEngine {
                 attack.baseDamage
             );
 
-        const finalDamage =
-            this.applyDamage(
+        const damageResult =
+            this.resolveDamage(
                 defender,
                 damage
             );
@@ -485,6 +514,8 @@ export class BattleEngine {
             attacker:
                 attacker.name,
 
+            owner: this.turn,
+
             defender:
                 defender.name,
 
@@ -495,13 +526,22 @@ export class BattleEngine {
                 attack.baseDamage,
 
             damage:
-                finalDamage,
+                damageResult.damage,
 
             targetHp:
                 defender.currentHp,
 
             defeated:
-                defender.defeated
+                defender.defeated,
+
+            critical:
+                damageResult.critical,
+
+            dodged:
+                damageResult.dodged,
+
+            defended:
+                damageResult.defended
         };
     }
 
@@ -547,8 +587,8 @@ export class BattleEngine {
                 special.baseDamage
             );
 
-        const finalDamage =
-            this.applyDamage(
+        const damageResult =
+            this.resolveDamage(
                 defender,
                 damage
             );
@@ -567,6 +607,8 @@ export class BattleEngine {
             attacker:
                 attacker.name,
 
+            owner: this.turn,
+
             defender:
                 defender.name,
 
@@ -577,13 +619,22 @@ export class BattleEngine {
                 special.baseDamage,
 
             damage:
-                finalDamage,
+                damageResult.damage,
 
             targetHp:
                 defender.currentHp,
 
             defeated:
                 defender.defeated,
+
+            critical:
+                damageResult.critical,
+
+            dodged:
+                damageResult.dodged,
+
+            defended:
+                damageResult.defended,
 
             cooldown:
                 attacker.specialCooldown
@@ -686,77 +737,92 @@ export class BattleEngine {
     }
 
     /*
+     * Selecciona una acción automática válida
+     * para cualquier participante.
+     *
+     * La lista siempre sale del estado actual
+     * del motor, por lo que el especial nunca
+     * puede ser elegido si está bloqueado.
+     */
+    getAutomaticAction(owner) {
+
+        const actions =
+            this.getAvailableActions(owner);
+
+        if (!actions.length) {
+            return null;
+        }
+
+        const card =
+            this.getCurrentCard(owner);
+
+        /*
+         * Si la carta tiene poca vida, puede
+         * priorizar defensa.
+         */
+        const lowHp =
+            card.currentHp <= MAX_HP * 0.30;
+
+        if (
+            lowHp &&
+            actions.includes('defense') &&
+            Math.random() < 0.45
+        ) {
+            return 'defense';
+        }
+
+        /*
+         * El especial tiene prioridad cuando
+         * está disponible.
+         */
+        if (
+            actions.includes('special') &&
+            Math.random() < 0.55
+        ) {
+            return 'special';
+        }
+
+        /*
+         * Evitamos defensa consecutiva.
+         */
+        const lastAction =
+            this.history[this.history.length - 1];
+
+        let validActions = [...actions];
+
+        if (
+            lastAction?.owner === owner &&
+            lastAction?.type === 'defense'
+        ) {
+            validActions = validActions.filter(
+                (action) => action !== 'defense'
+            );
+        }
+
+        const attackActions =
+            validActions.filter(
+                (action) =>
+                    action.startsWith('attack-')
+            );
+
+        if (attackActions.length) {
+            return attackActions[
+                Math.floor(
+                    Math.random() * attackActions.length
+                )
+            ];
+        }
+
+        return validActions[0];
+    }
+
+    /*
      * Decide automáticamente qué acción
      * realizará la máquina.
      */
     getMachineAction() {
 
-        const actions =
-            this.getAvailableActions(
-                'machine'
-            );
-
-        if (!actions.length) {
-
-            return null;
-        }
-
-        /*
-         * Si el especial está disponible,
-         * existe un 40% de probabilidad
-         * de utilizarlo.
-         */
-        if (
-            actions.includes(
-                'special'
-            )
-        ) {
-
-            const useSpecial =
-                Math.random() < 0.4;
-
-            if (useSpecial) {
-
-                return 'special';
-            }
-        }
-
-        /*
-         * 20% de probabilidad de defender.
-         */
-        if (
-            Math.random() < 0.2
-        ) {
-
-            return 'defense';
-        }
-
-        /*
-         * Si no utiliza especial ni defensa,
-         * elige uno de los cuatro ataques.
-         */
-        const attacks =
-            actions.filter(
-                (action) =>
-                    action.startsWith(
-                        'attack-'
-                    )
-            );
-
-        if (!attacks.length) {
-
-            return 'defense';
-        }
-
-        const randomIndex =
-            Math.floor(
-                Math.random() *
-                attacks.length
-            );
-
-        return attacks[
-            randomIndex
-        ];
+        return this.getAutomaticAction('machine');
     }
 
     /*
