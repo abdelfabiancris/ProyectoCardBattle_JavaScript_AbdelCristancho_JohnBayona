@@ -255,3 +255,40 @@
         width: 100%;
     }
 }
+/* ========================================
+   SELECTOR DE MODO DE BATALLA
+======================================== */
+
+.battle-mode-selector {
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 16px;
+    background: rgba(255, 250, 240, 0.9);
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.battle-mode-selector h2 {
+    margin-top: 0;
+}
+
+.mode-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 10px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: #fff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.mode-option input {
+    accent-color: #7b1e1e;
+}
+
+.mode-description {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}

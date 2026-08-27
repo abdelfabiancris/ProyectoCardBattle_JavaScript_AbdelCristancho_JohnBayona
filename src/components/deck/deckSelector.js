@@ -10,6 +10,7 @@ export class DeckSelector extends HTMLElement {
         this.cards = [];
         this.selectedCards = [];
         this.machineCards = [];
+        this.mode = 'manual';
 
         this.renderLoading();
         this.loadCards();
@@ -114,6 +115,35 @@ export class DeckSelector extends HTMLElement {
                         </div>
 
                     </header>
+
+                    <section class="battle-mode-selector">
+
+                        <h2>🎮 Modo de batalla</h2>
+
+                        <label class="mode-option">
+                            <input
+                                type="radio"
+                                name="battle-mode"
+                                value="manual"
+                                checked
+                            >
+                            <span>🎮 Manual</span>
+                        </label>
+
+                        <label class="mode-option">
+                            <input
+                                type="radio"
+                                name="battle-mode"
+                                value="automatic"
+                            >
+                            <span>🤖 Automático</span>
+                        </label>
+
+                        <p class="mode-description">
+                            En automático, el jugador y la máquina toman acciones mediante una estrategia JavaScript.
+                        </p>
+
+                    </section>
 
                     <div
                         id="selected-deck"
@@ -404,6 +434,18 @@ export class DeckSelector extends HTMLElement {
         );
 
         /*
+         * Selección del modo de batalla.
+         */
+        this.querySelectorAll(
+            'input[name="battle-mode"]'
+        ).forEach((radio) => {
+
+            radio.addEventListener('change', () => {
+                this.mode = radio.value;
+            });
+        });
+
+        /*
          * Iniciar batalla.
          */
         this.querySelector(
@@ -672,7 +714,10 @@ export class DeckSelector extends HTMLElement {
                             [...machineDeck],
 
                         player:
-                            this.player
+                            this.player,
+
+                        mode:
+                            this.mode
                     },
 
                     bubbles: true
