@@ -277,6 +277,11 @@ export class GameApp extends HTMLElement {
                 result:
                     data.result,
 
+                mode:
+                    data.mode === 'automatic'
+                        ? 'automatic'
+                        : 'manual',
+
                 pointsAwarded:
                     points,
 
